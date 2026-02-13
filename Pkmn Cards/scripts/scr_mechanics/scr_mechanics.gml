@@ -12,37 +12,103 @@ function get_gen3_category(_type) {
 }
 
 /// @func get_type_effectiveness(_atk_type, _def_type)
+/// @func get_type_effectiveness(_atk_type, _def_type)
 function get_type_effectiveness(_atk_type, _def_type) {
-    // Simplified Chart for Prototype
-    // 2.0 = Super Effective, 0.5 = Not Very, 0.0 = Immune
+    // 1.0 is Neutral. 2.0 is Super Effective. 0.5 is Not Very Effective. 0.0 is Immune.
     
-    if (_atk_type == ELEMENT.FIRE) {
-        if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.ICE || _def_type == ELEMENT.STEEL || _def_type == ELEMENT.BUG) return 2.0;
-        if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.FIRE || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.DRAGON) return 0.5;
+    switch (_atk_type) {
+        case ELEMENT.NORMAL:
+            if (_def_type == ELEMENT.ROCK || _def_type == ELEMENT.STEEL) return 0.5;
+            if (_def_type == ELEMENT.GHOST) return 0.0;
+            break;
+
+        case ELEMENT.FIRE:
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.ICE || _def_type == ELEMENT.BUG || _def_type == ELEMENT.STEEL) return 2.0;
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.WATER || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.DRAGON) return 0.5;
+            break;
+
+        case ELEMENT.WATER:
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.ROCK) return 2.0;
+            if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.GRASS || _def_type == ELEMENT.DRAGON) return 0.5;
+            break;
+
+        case ELEMENT.GRASS:
+            if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.ROCK) return 2.0;
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.GRASS || _def_type == ELEMENT.POISON || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.BUG || _def_type == ELEMENT.DRAGON || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.ELECTRIC:
+            if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.FLYING) return 2.0;
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.ELECTRIC || _def_type == ELEMENT.DRAGON) return 0.5;
+            if (_def_type == ELEMENT.GROUND) return 0.0;
+            break;
+
+        case ELEMENT.ICE:
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.DRAGON) return 2.0;
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.WATER || _def_type == ELEMENT.ICE || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.FIGHTING:
+            if (_def_type == ELEMENT.NORMAL || _def_type == ELEMENT.ICE || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.DARK || _def_type == ELEMENT.STEEL) return 2.0;
+            if (_def_type == ELEMENT.POISON || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.PSYCHIC || _def_type == ELEMENT.BUG) return 0.5;
+            if (_def_type == ELEMENT.GHOST) return 0.0;
+            break;
+
+        case ELEMENT.POISON:
+            if (_def_type == ELEMENT.GRASS) return 2.0;
+            if (_def_type == ELEMENT.POISON || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.GHOST) return 0.5;
+            if (_def_type == ELEMENT.STEEL) return 0.0;
+            break;
+
+        case ELEMENT.GROUND:
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.ELECTRIC || _def_type == ELEMENT.POISON || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.STEEL) return 2.0;
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.BUG) return 0.5;
+            if (_def_type == ELEMENT.FLYING) return 0.0;
+            break;
+
+        case ELEMENT.FLYING:
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.FIGHTING || _def_type == ELEMENT.BUG) return 2.0;
+            if (_def_type == ELEMENT.ELECTRIC || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.PSYCHIC:
+            if (_def_type == ELEMENT.FIGHTING || _def_type == ELEMENT.POISON) return 2.0;
+            if (_def_type == ELEMENT.PSYCHIC || _def_type == ELEMENT.STEEL) return 0.5;
+            if (_def_type == ELEMENT.DARK) return 0.0;
+            break;
+
+        case ELEMENT.BUG:
+            if (_def_type == ELEMENT.GRASS || _def_type == ELEMENT.PSYCHIC || _def_type == ELEMENT.DARK) return 2.0;
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.FIGHTING || _def_type == ELEMENT.POISON || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.GHOST || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.ROCK:
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.ICE || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.BUG) return 2.0;
+            if (_def_type == ELEMENT.FIGHTING || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.GHOST:
+            if (_def_type == ELEMENT.PSYCHIC || _def_type == ELEMENT.GHOST) return 2.0;
+            if (_def_type == ELEMENT.DARK || _def_type == ELEMENT.STEEL) return 0.5;
+            if (_def_type == ELEMENT.NORMAL) return 0.0;
+            break;
+
+        case ELEMENT.DRAGON:
+            if (_def_type == ELEMENT.DRAGON) return 2.0;
+            if (_def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.STEEL:
+            if (_def_type == ELEMENT.ICE || _def_type == ELEMENT.ROCK) return 2.0;
+            if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.WATER || _def_type == ELEMENT.ELECTRIC || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
+
+        case ELEMENT.DARK:
+            if (_def_type == ELEMENT.PSYCHIC || _def_type == ELEMENT.GHOST) return 2.0;
+            if (_def_type == ELEMENT.FIGHTING || _def_type == ELEMENT.DARK || _def_type == ELEMENT.STEEL) return 0.5;
+            break;
     }
-    if (_atk_type == ELEMENT.WATER) {
-        if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.ROCK) return 2.0;
-        if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.GRASS || _def_type == ELEMENT.DRAGON) return 0.5;
-    }
-    if (_atk_type == ELEMENT.GRASS) {
-        if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.GROUND || _def_type == ELEMENT.ROCK) return 2.0;
-        if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.GRASS || _def_type == ELEMENT.POISON || _def_type == ELEMENT.FLYING || _def_type == ELEMENT.BUG || _def_type == ELEMENT.DRAGON || _def_type == ELEMENT.STEEL) return 0.5;
-    }
-    if (_atk_type == ELEMENT.GROUND) {
-        if (_def_type == ELEMENT.FLYING) return 0.0; // IMMUNITY
-        if (_def_type == ELEMENT.FIRE || _def_type == ELEMENT.ELECTRIC || _def_type == ELEMENT.POISON || _def_type == ELEMENT.ROCK || _def_type == ELEMENT.STEEL) return 2.0;
-    }
-    if (_atk_type == ELEMENT.ELECTRIC) {
-        if (_def_type == ELEMENT.GROUND) return 0.0; // IMMUNITY
-        if (_def_type == ELEMENT.WATER || _def_type == ELEMENT.FLYING) return 2.0;
-    }
-    if (_atk_type == ELEMENT.FIGHTING) {
-        if (_def_type == ELEMENT.GHOST) return 0.0; // IMMUNITY
-    }
-    if (_atk_type == ELEMENT.NORMAL) {
-        if (_def_type == ELEMENT.GHOST) return 0.0; // IMMUNITY
-    }
-    
+
     return 1.0; // Default Neutral
 }
 

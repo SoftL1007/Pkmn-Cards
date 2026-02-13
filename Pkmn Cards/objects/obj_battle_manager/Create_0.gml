@@ -26,3 +26,15 @@ max_hand_size = 5;
 selected_move = -1;
 selected_card = -1;
 selected_switch_target = -1;
+
+
+// --- VISUAL FX VARIABLES ---
+screen_shake = 0;
+p_flash_alpha = 0; // Player flash (0 = none, 1 = white)
+e_flash_alpha = 0; // Enemy flash
+
+// Sprite Animation Offsets (For lunging when attacking)
+p_offset_x = 0;
+p_offset_y = 0;
+e_offset_x = 0;
+e_offset_y = 0;

@@ -45,7 +45,8 @@ all_move_ids = [
 // ====================================================
 
 player_party = []; 
-player_deck = ["x_atk", "x_atk", "x_def", "x_spd", "x_atk"];
+// Make sure IDs match scr_database_cards EXACTLY
+player_deck = ["x_atk", "x_atk", "x_def", "x_spd", "potion_hyper", "potion_hyper"];
 
 // ====================================================
 // 3. GENERATOR FUNCTIONS

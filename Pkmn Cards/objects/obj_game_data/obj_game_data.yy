@@ -8,8 +8,8 @@
   "name":"obj_game_data",
   "overriddenProperties":[],
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"group1",
+    "path":"folders/group1.yy",
   },
   "parentObjectId":null,
   "persistent":true,

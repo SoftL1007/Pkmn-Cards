@@ -9,8 +9,8 @@
   "name":"obj_ui_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"group1",
+    "path":"folders/group1.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -10,8 +10,8 @@
   "name":"obj_battle_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"group1",
+    "path":"folders/group1.yy",
   },
   "parentObjectId":null,
   "persistent":false,
