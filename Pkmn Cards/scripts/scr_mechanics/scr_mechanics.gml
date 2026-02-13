@@ -1,7 +1,5 @@
 /// @desc Gen 3 Mechanics
 
-/// @func get_gen3_category(_type)
-/// @desc Returns "PHYSICAL" or "SPECIAL" based on Type (Gen 3 Rules)
 function get_gen3_category(_type) {
     // Physical: Normal, Fight, Flying, Ground, Rock, Bug, Ghost, Poison, Steel
     var phys = [ELEMENT.NORMAL, ELEMENT.FIGHTING, ELEMENT.FLYING, ELEMENT.GROUND, 
@@ -11,8 +9,6 @@ function get_gen3_category(_type) {
     return "SPECIAL"; // Fire, Water, Grass, Elec, Ice, Psy, Drag, Dark
 }
 
-/// @func get_type_effectiveness(_atk_type, _def_type)
-/// @func get_type_effectiveness(_atk_type, _def_type)
 function get_type_effectiveness(_atk_type, _def_type) {
     // 1.0 is Neutral. 2.0 is Super Effective. 0.5 is Not Very Effective. 0.0 is Immune.
     
@@ -109,27 +105,65 @@ function get_type_effectiveness(_atk_type, _def_type) {
             break;
     }
 
-    return 1.0; // Default Neutral
+    return 1.0; 
 }
 
-/// @func calculate_damage_gen3(_attacker, _defender, _move)
-/// @desc Returns a Struct: { damage: int, message: string }
-function calculate_damage_gen3(_attacker, _defender, _move) {
-    var result = { damage: 0, message: "" };
+function calculate_move_result(_attacker, _defender, _move) {
+    var result = { 
+        damage: 0, 
+        message: "", 
+        hit: true, 
+        is_status: false,
+        stat_change: { stat: "none", stages: 0 } 
+    };
     
-    if (_move.base_power == 0) return result; // Status moves
+    // 1. Accuracy Check
+    if (_move.accuracy < 100 && irandom(100) > _move.accuracy) {
+        result.hit = false;
+        result.message = "The attack missed!";
+        return result;
+    }
+
+    // 2. CHECK FOR STATUS MOVES (0 Base Power)
+    if (_move.base_power == 0) {
+        result.is_status = true;
+        
+        switch(_move.id) {
+            case "swords_dance":
+                result.stat_change = { stat: "atk", stages: 2 };
+                result.message = "Attack rose sharply!";
+                break;
+            case "calm_mind":
+                result.stat_change = { stat: "spa", stages: 1 };
+                result.message = "Sp. Atk rose!";
+                break;
+            case "dragon_dance":
+                result.stat_change = { stat: "atk", stages: 1 };
+                result.message = "Attack rose!";
+                break;
+            case "growl":
+                result.stat_change = { stat: "atk", stages: -1 };
+                result.message = "Attack fell!";
+                break;
+            case "tail_whip":
+            case "leer":
+                result.stat_change = { stat: "def", stages: -1 };
+                result.message = "Defense fell!";
+                break;
+            default:
+                result.message = "But it failed!";
+        }
+        return result;
+    }
     
-    // 1. Determine Category (Gen 3 Split)
+    // 3. DAMAGE CALCULATION
     var cat = get_gen3_category(_move.type);
-    
     var a = (cat == "PHYSICAL") ? _attacker.stats.atk : _attacker.stats.spa;
     var d = (cat == "PHYSICAL") ? _defender.stats.def : _defender.stats.spd;
     
-    // 2. Base Damage
     var level_factor = (2 * _attacker.level) / 5 + 2;
     var base_dmg = (level_factor * _move.base_power * (a / d)) / 50 + 2;
     
-    // 3. Modifiers
     var multiplier = 1.0;
     
     // STAB
@@ -144,27 +178,23 @@ function calculate_damage_gen3(_attacker, _defender, _move) {
     }
     multiplier *= type_mult;
     
-    // Critical Hit (Gen 3: ~6.25%)
+    // Critical Hit
     var is_crit = (random(100) < 6.25);
     if (is_crit) multiplier *= 2.0;
     
-    // Random Variance (0.85 to 1.00)
     var rng = irandom_range(85, 100) / 100;
     
-    // Final Calc
     result.damage = floor(base_dmg * multiplier * rng);
     
-    // 4. Generate Feedback Message
     if (type_mult == 0) result.message = "It had no effect...";
     else if (type_mult > 1) result.message = "It's super effective!";
     else if (type_mult < 1) result.message = "It's not very effective...";
     
-    if (is_crit) result.message += " A critical hit!";
+    if (is_crit && type_mult > 0) result.message += " A critical hit!";
     
     return result;
 }
 
-// Helper
 function array_contains(_arr, _val) {
     for(var i=0; i<array_length(_arr); i++) {
         if (_arr[i] == _val) return true;

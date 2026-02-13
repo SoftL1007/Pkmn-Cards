@@ -34,6 +34,8 @@
     {"id":{"name":"scr_database_pokemon","path":"scripts/scr_database_pokemon/scr_database_pokemon.yy",},},
     {"id":{"name":"scr_definitions","path":"scripts/scr_definitions/scr_definitions.yy",},},
     {"id":{"name":"scr_mechanics","path":"scripts/scr_mechanics/scr_mechanics.yy",},},
+    {"id":{"name":"shd_buff","path":"shaders/shd_buff/shd_buff.yy",},},
+    {"id":{"name":"shd_debuff","path":"shaders/shd_debuff/shd_debuff.yy",},},
     {"id":{"name":"spr_blaziken_back","path":"sprites/spr_blaziken_back/spr_blaziken_back.yy",},},
     {"id":{"name":"spr_pokemon_master_back","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},},
     {"id":{"name":"spr_pokemon_master_front","path":"sprites/spr_pokemon_master_front/spr_pokemon_master_front.yy",},},
