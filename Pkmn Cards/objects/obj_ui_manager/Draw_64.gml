@@ -1,47 +1,51 @@
 if (!instance_exists(obj_battle_manager)) exit;
 var mgr = obj_battle_manager;
-var p_mon = mgr.player_pokemon;
-var e_mon = mgr.enemy_pokemon;
 
-draw_set_font(fnt_game); 
+// NEW: Get the ACTIVE pokemon from the teams
+var p_mon = mgr.player_team[mgr.p_active_index];
+var e_mon = mgr.enemy_team[mgr.e_active_index];
+
+draw_set_font(fnt_game);
+
 
 // --- 1. ENEMY HUD (Top Left - Fixed Coords) ---
 // Swampert Position
 draw_set_color(c_white);
-draw_sprite_ext(spr_swampert_front, 0, 1200, 250, 2, 2, 0, c_white, 1); // x, y, scaleX, scaleY
+draw_sprite_ext(spr_pokemon_master_back, e_mon.sprite_frame, 1480, 1100, 2, 2, 0, c_white, 1); // x, y, scaleX, scaleY
 
-// Info Box
-draw_set_color(c_dkgray);
-draw_rectangle(100, 50, 600, 180, false);
-draw_set_color(c_white);
-draw_text(120, 60, e_mon.species_name + " Lv." + string(e_mon.level));
 
-// HP Bar Background
-draw_set_color(c_black);
-draw_rectangle(120, 100, 500, 130, false);
-// HP Bar Foreground
-var hp_pct = (e_mon.current_hp / e_mon.max_hp) * 100;
-draw_healthbar(120, 100, 500, 130, hp_pct, c_black, c_red, c_green, 0, true, true);
 
 
 // --- 2. PLAYER HUD (Bottom Left - Fixed Coords) ---
-// Blaziken Position
-draw_sprite_ext(spr_blaziken_back, 0, 400, 600, 2, 2, 0, c_white, 1);
-
-// Info Box
+draw_sprite_ext(spr_pokemon_master_front, p_mon.sprite_frame, 400, 1100, 2, 2, 0, c_white, 1);
+ 
+// Info Box for player
 draw_set_color(c_dkgray);
-draw_rectangle(1000, 600, 1500, 750, false); // Bottom Right area
+draw_rectangle(1300, 700, 1920, 850, false); // Bottom Right area
 draw_set_color(c_white);
-draw_text(1020, 620, p_mon.species_name + " Lv." + string(p_mon.level));
-draw_text(1020, 660, string(p_mon.current_hp) + "/" + string(p_mon.max_hp));
+draw_text(1520, 710, p_mon.species_name + " Lv." + string(p_mon.level));
+draw_text(1520, 740, string(p_mon.current_hp) + "/" + string(p_mon.max_hp));
 
 // HP Bar
-draw_healthbar(1020, 690, 1400, 720, (p_mon.current_hp / p_mon.max_hp)*100, c_black, c_red, c_green, 0, true, true);
+draw_healthbar(1400, 810, 1800, 770, (p_mon.current_hp / p_mon.max_hp)*100, c_black, c_red, c_green, 0, true, true);
+
+// Info Box for enemy
+draw_set_color(c_dkgray);
+draw_rectangle(0, 0, 600, 140, false);
+draw_set_color(c_white);
+draw_text(20, 10, e_mon.species_name + " Lv." + string(e_mon.level));
+
+// HP Bar Background
+draw_set_color(c_black);
+draw_rectangle(20, 50, 500, 80, false);
+// HP Bar Foreground
+var hp_pct = (e_mon.current_hp / e_mon.max_hp) * 100;
+draw_healthbar(20, 50, 500, 80, hp_pct, c_black, c_red, c_green, 0, true, true);
 
 
 // --- 3. BATTLE LOG (Bottom Center) ---
 draw_set_color(c_black);
-draw_rectangle(600, 850, 1320, 950, false); // Black box background
+draw_rectangle(0, 850, 1920, 1080, false); // Black box background
 draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_text(960, 880, mgr.battle_log);
@@ -51,10 +55,12 @@ draw_set_halign(fa_left);
 // --- 4. PLAYER INPUT UI ---
 if (mgr.state == BATTLE_STATE.INPUT_PHASE) {
     
+	
+	
     // MOVE BUTTONS (Bottom Row)
     for (var i = 0; i < array_length(p_mon.moves); i++) {
-        var mx = 100 + (i * 300); // Spread them out more
-        var my = 900;
+        var mx = 360 + (i * 300); // Spread them out more
+        var my = 950;
         
         // Color based on selection
         if (mgr.selected_move == i) draw_set_color(c_yellow);
@@ -82,14 +88,14 @@ if (mgr.state == BATTLE_STATE.INPUT_PHASE) {
     // CARD HAND (Vertical list on Right Side)
     for (var c = 0; c < array_length(mgr.player_hand); c++) {
         var card = mgr.player_hand[c];
-        var cx = 1600;
-        var cy = 100 + (c * 150); // Start from top right, go down
+        var cx = 1650;
+        var cy = 20 + (c * 150); // Start from top right, go down
         
         if (mgr.selected_card == c) draw_set_color(c_aqua);
-        else draw_set_color(c_ltgray);
+        else draw_set_color(c_dkgrey);
         
         draw_rectangle(cx, cy, cx+250, cy+130, false);
-        draw_set_color(c_black);
+        draw_set_color(c_white);
         draw_text(cx+10, cy+10, card.name);
         draw_text_ext(cx+10, cy+40, card.description, 20, 230);
         

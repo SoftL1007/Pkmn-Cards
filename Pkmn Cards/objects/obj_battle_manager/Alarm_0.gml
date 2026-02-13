@@ -1,76 +1,59 @@
-/// @desc RESOLVE ACTIONS (Turn Logic)
-
 if (array_length(action_queue) > 0) {
-    // 1. Pop the first action
     var act = action_queue[0];
     array_delete(action_queue, 0, 1);
     
-    // 2. Check Faint Interrupt (Stop attacking dead bodies)
-    if (act.actor.current_hp <= 0) {
-        battle_log = act.actor.nickname + " fainted and cannot move!";
+    // --- 1. HANDLE SWITCHING ---
+    if (act.type == ACTION_TYPE.SWITCH) {
+        p_active_index = act.data;
+        battle_log = "Player switched to " + player_team[p_active_index].nickname + "!";
+        alarm[0] = 90;
+        exit;
+    }
+    
+    // --- 2. VALIDATE ACTOR ---
+    // If actor fainted earlier in the turn, they cannot move
+    if (act.actor.is_fainted()) {
+        battle_log = act.actor.nickname + " fainted and couldn't move!";
         alarm[0] = 60;
         exit;
     }
     
-    // 3. EXECUTE LOGIC
+    // --- 3. EXECUTE ATTACKS/CARDS ---
     if (act.type == ACTION_TYPE.CARD) {
         battle_log = "Player used " + act.data.name + "!";
-        
-        // --- FIXED CARD IDs TO MATCH DATABASE ---
         if (act.data.id == "potion_hyper") {
-            act.target.current_hp = min(act.target.current_hp + 200, act.target.max_hp);
-            battle_log += " HP Restored.";
-        }
-        else if (act.data.id == "revive") {
-             // Basic stub for revive logic
-             battle_log += " (Revive logic stub)";
+             act.target.current_hp = min(act.target.current_hp + 200, act.target.max_hp);
+             battle_log += " HP Restored.";
         }
         else if (act.data.id == "x_atk") {
             act.target.stats.atk = floor(act.target.stats.atk * 1.5);
             battle_log += " Attack Rose.";
         }
-        else if (act.data.id == "x_def") {
-            act.target.stats.def = floor(act.target.stats.def * 1.5);
-            battle_log += " Defense Rose.";
-        }
-        else if (act.data.id == "x_spd") {
-            act.target.stats.spe = floor(act.target.stats.spe * 1.5);
-            battle_log += " Speed Rose.";
-        }
+        // Add other cards...
     }
     else if (act.type == ACTION_TYPE.ATTACK) {
-        // Attack Logic
         battle_log = act.actor.nickname + " used " + act.data.name + "!";
         
-        var damage = calculate_damage(act.actor, act.target, act.data);
-        act.target.current_hp = max(0, act.target.current_hp - damage);
+        // Calculate Gen 3 Damage
+        var result = calculate_damage_gen3(act.actor, act.target, act.data);
+        act.target.current_hp = max(0, act.target.current_hp - result.damage);
         
-        // Append damage info
-        // (Wait 1 frame or append immediately? For prototype, append immediately)
-        // Note: In a real game, you'd split this into multiple text states.
+        // Detailed Logs (Split into 2 messages for readability?)
+        // For now, combine them: "Dealt 50 dmg! It's super effective!"
+        battle_log += " Dealt " + string(result.damage) + ". " + result.message;
         
-        // Check for Faint
-        if (act.target.current_hp <= 0) {
-            battle_log = act.target.nickname + " fainted!";
-            
-            // Clear remaining queue targeting this mon
-            // In 1v1, if opponent dies, game over.
-            action_queue = []; 
-            state = BATTLE_STATE.WIN_LOSS;
+        if (act.target.is_fainted()) {
+            // Target died, wipe remaining actions targeting them?
+            // For now, we let the loop handle it naturally (validation check above handles actor death)
+            // But we should stop this specific queue execution to handle faint state
+            state = BATTLE_STATE.CHECK_FAINT;
+            action_queue = []; // Clear rest of turn
             exit;
-        } else {
-             battle_log = act.actor.nickname + " dealt " + string(damage) + " dmg!";
         }
     }
     
-    // 4. Continue Loop
-    alarm[0] = 120; // Slower text speed (2 seconds) to read
-    
+    alarm[0] = 120; // Wait 2s
 } else {
-    // Queue Empty, Turn Over
-    if (state != BATTLE_STATE.WIN_LOSS) {
-        selected_move = -1;
-        selected_card = -1;
-        state = BATTLE_STATE.DRAW_PHASE;
-    }
+    // End of Turn -> Check Faints
+    state = BATTLE_STATE.CHECK_FAINT;
 }
