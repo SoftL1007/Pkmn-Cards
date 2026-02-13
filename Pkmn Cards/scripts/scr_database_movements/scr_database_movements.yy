@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_database_moves",
+  "%Name":"scr_database_movements",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_database_moves",
+  "name":"scr_database_movements",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

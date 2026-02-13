@@ -10,7 +10,7 @@
   },
   "defaultScriptType":1,
   "Folders":[
-    {"$GMFolder":"","%Name":"group1","folderPath":"folders/group1.yy","name":"group1","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Objects","folderPath":"folders/Objects.yy","name":"Objects","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
@@ -30,7 +30,7 @@
     {"id":{"name":"RmInitiate","path":"rooms/RmInitiate/RmInitiate.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"scr_database_cards","path":"scripts/scr_database_cards/scr_database_cards.yy",},},
-    {"id":{"name":"scr_database_moves","path":"scripts/scr_database_moves/scr_database_moves.yy",},},
+    {"id":{"name":"scr_database_movements","path":"scripts/scr_database_movements/scr_database_movements.yy",},},
     {"id":{"name":"scr_database_pokemon","path":"scripts/scr_database_pokemon/scr_database_pokemon.yy",},},
     {"id":{"name":"scr_definitions","path":"scripts/scr_definitions/scr_definitions.yy",},},
     {"id":{"name":"scr_mechanics","path":"scripts/scr_mechanics/scr_mechanics.yy",},},

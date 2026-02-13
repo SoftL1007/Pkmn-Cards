@@ -1,5 +1,6 @@
-/// @desc Gen 3 Mechanics
+/// @desc Gen 3 Mechanics & Type Chart
 
+/// @func get_gen3_category(_type)
 function get_gen3_category(_type) {
     // Physical: Normal, Fight, Flying, Ground, Rock, Bug, Ghost, Poison, Steel
     var phys = [ELEMENT.NORMAL, ELEMENT.FIGHTING, ELEMENT.FLYING, ELEMENT.GROUND, 
@@ -9,8 +10,9 @@ function get_gen3_category(_type) {
     return "SPECIAL"; // Fire, Water, Grass, Elec, Ice, Psy, Drag, Dark
 }
 
+/// @func get_type_effectiveness(_atk_type, _def_type)
 function get_type_effectiveness(_atk_type, _def_type) {
-    // 1.0 is Neutral. 2.0 is Super Effective. 0.5 is Not Very Effective. 0.0 is Immune.
+    // 1.0 = Neutral, 2.0 = Super Effective, 0.5 = Not Very Effective, 0.0 = Immune
     
     switch (_atk_type) {
         case ELEMENT.NORMAL:
@@ -105,16 +107,18 @@ function get_type_effectiveness(_atk_type, _def_type) {
             break;
     }
 
-    return 1.0; 
+    return 1.0; // Default Neutral
 }
 
+/// @func calculate_move_result(_attacker, _defender, _move)
 function calculate_move_result(_attacker, _defender, _move) {
     var result = { 
         damage: 0, 
         message: "", 
         hit: true, 
         is_status: false,
-        stat_change: { stat: "none", stages: 0 } 
+        stat_change: { stat: "none", stages: 0, target: SCOPE.ENEMY },
+        condition_change: { condition: "none", target: SCOPE.ENEMY }
     };
     
     // 1. Accuracy Check
@@ -124,34 +128,42 @@ function calculate_move_result(_attacker, _defender, _move) {
         return result;
     }
 
-    // 2. CHECK FOR STATUS MOVES (0 Base Power)
+    // 2. CHECK FOR STATUS MOVES (BP 0)
     if (_move.base_power == 0) {
         result.is_status = true;
         
-        switch(_move.id) {
-            case "swords_dance":
-                result.stat_change = { stat: "atk", stages: 2 };
-                result.message = "Attack rose sharply!";
-                break;
-            case "calm_mind":
-                result.stat_change = { stat: "spa", stages: 1 };
-                result.message = "Sp. Atk rose!";
-                break;
-            case "dragon_dance":
-                result.stat_change = { stat: "atk", stages: 1 };
-                result.message = "Attack rose!";
-                break;
-            case "growl":
-                result.stat_change = { stat: "atk", stages: -1 };
-                result.message = "Attack fell!";
-                break;
-            case "tail_whip":
-            case "leer":
-                result.stat_change = { stat: "def", stages: -1 };
-                result.message = "Defense fell!";
-                break;
-            default:
-                result.message = "But it failed!";
+        // A) Stat Change
+        if (variable_struct_exists(_move.effect, "stat") && _move.effect.stat != "none") {
+            result.stat_change = {
+                stat: _move.effect.stat,
+                stages: _move.effect.amount,
+                target: _move.effect.target
+            };
+            var s_name = _move.effect.stat; 
+            switch(s_name) {
+                case "atk": s_name = "Attack"; break;
+                case "def": s_name = "Defense"; break;
+                case "spa": s_name = "Sp. Atk"; break;
+                case "spd": s_name = "Sp. Def"; break;
+                case "spe": s_name = "Speed"; break;
+                case "acc": s_name = "Accuracy"; break;
+            }
+            var rise = (_move.effect.amount > 0);
+            result.message = s_name + (rise ? " rose!" : " fell!");
+        } 
+        // B) Condition Change
+        else if (variable_struct_exists(_move.effect, "condition") && _move.effect.condition != "none") {
+            result.condition_change = {
+                condition: _move.effect.condition,
+                target: _move.effect.target
+            };
+            if (_move.effect.condition == "PAR") result.message = "paralyzed!";
+            if (_move.effect.condition == "BRN") result.message = "burned!";
+            if (_move.effect.condition == "PSN") result.message = "poisoned!";
+            if (_move.effect.condition == "SLP") result.message = "fell asleep!";
+        }
+        else {
+            result.message = "But it failed!";
         }
         return result;
     }
@@ -167,11 +179,9 @@ function calculate_move_result(_attacker, _defender, _move) {
     var multiplier = 1.0;
     
     // STAB
-    if (array_contains(_attacker.types, _move.type)) {
-        multiplier *= 1.5;
-    }
+    if (array_contains(_attacker.types, _move.type)) multiplier *= 1.5;
     
-    // Type Effectiveness
+    // Type Effectiveness (Loop for Dual Types)
     var type_mult = 1.0;
     for (var i = 0; i < array_length(_defender.types); i++) {
         type_mult *= get_type_effectiveness(_move.type, _defender.types[i]);
@@ -183,14 +193,51 @@ function calculate_move_result(_attacker, _defender, _move) {
     if (is_crit) multiplier *= 2.0;
     
     var rng = irandom_range(85, 100) / 100;
-    
     result.damage = floor(base_dmg * multiplier * rng);
     
+    // Messages
     if (type_mult == 0) result.message = "It had no effect...";
     else if (type_mult > 1) result.message = "It's super effective!";
     else if (type_mult < 1) result.message = "It's not very effective...";
     
-    if (is_crit && type_mult > 0) result.message += " A critical hit!";
+    if (is_crit && type_mult > 0) result.message += " Critical hit!";
+    
+    // 4. SECONDARY EFFECTS (10%, 30% chances etc)
+    if (irandom(100) < _move.effect.chance) {
+        
+        // Secondary Stat Change
+        if (variable_struct_exists(_move.effect, "stat") && _move.effect.stat != "none") {
+            result.stat_change = {
+                stat: _move.effect.stat,
+                stages: _move.effect.amount,
+                target: _move.effect.target
+            };
+            
+            var s_name = _move.effect.stat; 
+            switch(s_name) {
+                case "atk": s_name = "Attack"; break;
+                case "def": s_name = "Defense"; break;
+                case "spa": s_name = "Sp. Atk"; break;
+                case "spd": s_name = "Sp. Def"; break;
+                case "spe": s_name = "Speed"; break;
+                case "acc": s_name = "Accuracy"; break;
+            }
+            var rise = (_move.effect.amount > 0);
+            result.message += " " + s_name + (rise ? " rose!" : " fell!");
+        }
+        
+        // Secondary Condition Change
+        if (variable_struct_exists(_move.effect, "condition") && _move.effect.condition != "none") {
+             result.condition_change = {
+                condition: _move.effect.condition,
+                target: _move.effect.target
+            };
+            if (_move.effect.condition == "PAR") result.message += " Paralyzed!";
+            if (_move.effect.condition == "BRN") result.message += " Burned!";
+            if (_move.effect.condition == "PSN") result.message += " Poisoned!";
+            if (_move.effect.condition == "SLP") result.message += " Fell asleep!";
+        }
+    }
     
     return result;
 }

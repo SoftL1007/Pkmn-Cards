@@ -8,8 +8,8 @@
   "name":"obj_game_data",
   "overriddenProperties":[],
   "parent":{
-    "name":"group1",
-    "path":"folders/group1.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":true,
@@ -29,10 +29,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_swampert_front",
-    "path":"sprites/spr_swampert_front/spr_swampert_front.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":false,
 }

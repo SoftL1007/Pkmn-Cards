@@ -9,8 +9,8 @@
   "name":"obj_ui_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"group1",
-    "path":"folders/group1.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,
