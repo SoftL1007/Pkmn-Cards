@@ -12,26 +12,50 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"1ce1697f-d352-4da6-a89e-ff9986c781bd","name":"1ce1697f-d352-4da6-a89e-ff9986c781bd","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"17b9ece9-c305-4719-b3d9-7b1ba40cc330","name":"17b9ece9-c305-4719-b3d9-7b1ba40cc330","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"3c6d259c-9f2d-4df0-a522-ae4e3f303148","name":"3c6d259c-9f2d-4df0-a522-ae4e3f303148","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"e251e368-8a21-4fbc-9ab5-1233c13b60a2","name":"e251e368-8a21-4fbc-9ab5-1233c13b60a2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"aaa05624-ba88-4cc2-8029-a4c188c689dc","name":"aaa05624-ba88-4cc2-8029-a4c188c689dc","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"fa1bd91b-8781-4ffc-bede-9a0306fe9b83","name":"fa1bd91b-8781-4ffc-bede-9a0306fe9b83","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"6383c687-0f15-4cd5-9c23-5e1f968aa197","name":"6383c687-0f15-4cd5-9c23-5e1f968aa197","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"409c8601-c4c3-4d2d-aaec-16092dcec12b","name":"409c8601-c4c3-4d2d-aaec-16092dcec12b","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"be859d00-4933-4463-92cb-492d7a3e340c","name":"be859d00-4933-4463-92cb-492d7a3e340c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"ddcdd929-e35b-4ef0-8c03-0274bfe1b178","name":"ddcdd929-e35b-4ef0-8c03-0274bfe1b178","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"73444a3c-9fb4-473d-8dc1-95c9aaa73280","name":"73444a3c-9fb4-473d-8dc1-95c9aaa73280","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"4d596ecb-8fb3-4916-9dfd-145771cdb880","name":"4d596ecb-8fb3-4916-9dfd-145771cdb880","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"v1","%Name":"15e39c46-f417-4f91-8f89-fbb1c3a95b23","name":"15e39c46-f417-4f91-8f89-fbb1c3a95b23","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"10171415-3901-4761-bde1-f749bff04216","name":"10171415-3901-4761-bde1-f749bff04216","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e5b4a5ba-c78e-42ce-a707-7545a017feac","name":"e5b4a5ba-c78e-42ce-a707-7545a017feac","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"62016eba-f649-438f-aef7-ae1eb86eef55","name":"62016eba-f649-438f-aef7-ae1eb86eef55","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"9891ebda-f70b-461f-ae64-9d61165c0004","name":"9891ebda-f70b-461f-ae64-9d61165c0004","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7f28cbb9-6004-48b1-875e-7530e8ca42f1","name":"7f28cbb9-6004-48b1-875e-7530e8ca42f1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ff0ae515-94f9-472d-9616-f36125ddce04","name":"ff0ae515-94f9-472d-9616-f36125ddce04","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"3d5df2e5-35a1-4a6b-9abe-c576a78ff3f6","name":"3d5df2e5-35a1-4a6b-9abe-c576a78ff3f6","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f81ba3df-c3cb-4d86-af6f-61e4d78f8fe7","name":"f81ba3df-c3cb-4d86-af6f-61e4d78f8fe7","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f3f4a5e7-28ca-45fa-9337-f2aa910c3ad2","name":"f3f4a5e7-28ca-45fa-9337-f2aa910c3ad2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e68bc6d7-e669-4cb7-8084-901e064833f0","name":"e68bc6d7-e669-4cb7-8084-901e064833f0","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"4fa88e9f-f477-4fb0-90a5-0cd638e24046","name":"4fa88e9f-f477-4fb0-90a5-0cd638e24046","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"94ff7854-5530-4693-b6c7-85a4cb293809","name":"94ff7854-5530-4693-b6c7-85a4cb293809","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ce104723-9ef6-49ad-bb15-e95c72ade121","name":"ce104723-9ef6-49ad-bb15-e95c72ade121","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"81ac2e46-a3f8-4692-b7f9-bd5774f355e4","name":"81ac2e46-a3f8-4692-b7f9-bd5774f355e4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"9f818eb8-7488-4995-9406-f9de34e62931","name":"9f818eb8-7488-4995-9406-f9de34e62931","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"4b467b18-fb89-4862-8013-0b75b981e90d","name":"4b467b18-fb89-4862-8013-0b75b981e90d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"5bac3f63-325c-487a-8c81-1e341edb4fc5","name":"5bac3f63-325c-487a-8c81-1e341edb4fc5","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"227352db-4f54-45e0-aacd-641f4686b90c","name":"227352db-4f54-45e0-aacd-641f4686b90c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"6e3bc119-9670-417d-8126-eda275c21ee4","name":"6e3bc119-9670-417d-8126-eda275c21ee4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"b1261135-3da1-4daa-92bc-265fea10048a","name":"b1261135-3da1-4daa-92bc-265fea10048a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"0299ae8e-68a6-45e7-bfa2-add68f566dff","name":"0299ae8e-68a6-45e7-bfa2-add68f566dff","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f4c696b6-6297-45e4-9e28-f870b73bd37c","name":"f4c696b6-6297-45e4-9e28-f870b73bd37c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e4c09f6a-bbd0-4346-b4c8-7ca4affa8156","name":"e4c09f6a-bbd0-4346-b4c8-7ca4affa8156","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"416291bc-773d-490a-81ca-79df3a05e25f","name":"416291bc-773d-490a-81ca-79df3a05e25f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"3268cba7-8fa7-4293-9d5f-ca5d01c4f544","name":"3268cba7-8fa7-4293-9d5f-ca5d01c4f544","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"b0681774-ed5b-4898-8543-a8ef37066ad2","name":"b0681774-ed5b-4898-8543-a8ef37066ad2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"5bdacb58-5837-43dd-9c37-2f162f4398d3","name":"5bdacb58-5837-43dd-9c37-2f162f4398d3","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"70c666d6-70e1-4c90-a4c1-8683c7776cd2","name":"70c666d6-70e1-4c90-a4c1-8683c7776cd2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"84e03fce-8b68-4cb5-995f-81efadeb9b6d","name":"84e03fce-8b68-4cb5-995f-81efadeb9b6d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"54db0514-a1bf-4129-8fa8-6d637aa40b16","name":"54db0514-a1bf-4129-8fa8-6d637aa40b16","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f968c0a4-0c55-4456-97de-3301ca664a00","name":"f968c0a4-0c55-4456-97de-3301ca664a00","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e88c01bf-ccf5-40a7-963a-0c799b9e2dde","name":"e88c01bf-ccf5-40a7-963a-0c799b9e2dde","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"70d74a8c-1dda-4158-bdd7-dba68b11949c","name":"70d74a8c-1dda-4158-bdd7-dba68b11949c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"0305f17d-d575-4973-9a9a-fd05b1cb51fd","name":"0305f17d-d575-4973-9a9a-fd05b1cb51fd","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"dcdd4eb3-ca16-44a3-bb1b-693b7c34664c","name":"dcdd4eb3-ca16-44a3-bb1b-693b7c34664c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"dcfea7e7-8c7b-4059-a748-bcda8abbe2fb","name":"dcfea7e7-8c7b-4059-a748-bcda8abbe2fb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ec486fd5-d7af-43ea-bcdb-c4cd8ebc4fbb","name":"ec486fd5-d7af-43ea-bcdb-c4cd8ebc4fbb","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":526,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"9305f22d-43b3-4a49-856c-613f7819d5b7","blendMode":0,"displayName":"default","isLocked":false,"name":"9305f22d-43b3-4a49-856c-613f7819d5b7","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"04559f75-4a4a-48ad-9209-80069377e6a0","blendMode":0,"displayName":"default","isLocked":false,"name":"04559f75-4a4a-48ad-9209-80069377e6a0","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_pokemon_master_back",
   "nineSlice":null,
@@ -61,7 +85,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":13.0,
+    "length":37.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -81,44 +105,116 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"1ce1697f-d352-4da6-a89e-ff9986c781bd","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"9e2cdf9e-ef0f-40f2-b2b8-caabb821d2a8","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"10171415-3901-4761-bde1-f749bff04216","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"617fa727-281c-466a-9363-f0b98574348a","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"17b9ece9-c305-4719-b3d9-7b1ba40cc330","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"9dddcb37-0ee6-4224-ba5e-7ea0bcd9ea63","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e5b4a5ba-c78e-42ce-a707-7545a017feac","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"788d9e52-10ab-4ae9-bcec-4e3c2ca0ab7e","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3c6d259c-9f2d-4df0-a522-ae4e3f303148","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"15ba5e39-8e49-48e3-9258-30a760fb1c85","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"62016eba-f649-438f-aef7-ae1eb86eef55","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"30cf367b-f190-4bff-b102-e516d86a331b","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e251e368-8a21-4fbc-9ab5-1233c13b60a2","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"afa6a463-a2ee-4096-a40e-fa5d53fa6c5f","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9891ebda-f70b-461f-ae64-9d61165c0004","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"ae68b19d-c06d-4882-8919-027bcebce58b","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"aaa05624-ba88-4cc2-8029-a4c188c689dc","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"96a40728-1241-443c-9cb8-a16cd3f0f631","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7f28cbb9-6004-48b1-875e-7530e8ca42f1","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"d34cdef8-5d6c-4511-9e3e-2ea0fa5bf418","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"fa1bd91b-8781-4ffc-bede-9a0306fe9b83","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"510f59f1-d5e6-4287-b3a7-a19f85e5450d","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ff0ae515-94f9-472d-9616-f36125ddce04","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"73d11095-6acf-4e1b-b1a0-249468b67e3c","IsCreationKey":false,"Key":5.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"6383c687-0f15-4cd5-9c23-5e1f968aa197","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"a71e82e5-55a8-4c3d-b38d-9e10ff32e04f","IsCreationKey":false,"Key":6.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3d5df2e5-35a1-4a6b-9abe-c576a78ff3f6","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"93cc2662-b8fa-4372-aac5-67246469785f","IsCreationKey":false,"Key":6.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"409c8601-c4c3-4d2d-aaec-16092dcec12b","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"caa45b8f-5f9f-4084-8fd5-9a17e0c6872d","IsCreationKey":false,"Key":7.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f81ba3df-c3cb-4d86-af6f-61e4d78f8fe7","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"49955add-4a1c-407f-be49-1fa655fef24f","IsCreationKey":false,"Key":7.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"be859d00-4933-4463-92cb-492d7a3e340c","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"7f041aca-f464-4b8b-a685-d60f34922600","IsCreationKey":false,"Key":8.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f3f4a5e7-28ca-45fa-9337-f2aa910c3ad2","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"9b1141ba-92ca-458c-90dc-18fbc7667bd9","IsCreationKey":false,"Key":8.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ddcdd929-e35b-4ef0-8c03-0274bfe1b178","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"6ccc191f-da9c-471b-808e-2ee342832004","IsCreationKey":false,"Key":9.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e68bc6d7-e669-4cb7-8084-901e064833f0","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"71b0c1d1-f4ae-40e0-a4ab-bc7724929759","IsCreationKey":false,"Key":9.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"73444a3c-9fb4-473d-8dc1-95c9aaa73280","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"50c05c12-9045-4555-a459-4e9ee0842036","IsCreationKey":false,"Key":10.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4fa88e9f-f477-4fb0-90a5-0cd638e24046","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"d5db20e7-65bc-4b90-b76b-288cf6b86380","IsCreationKey":false,"Key":10.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4d596ecb-8fb3-4916-9dfd-145771cdb880","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"d251c9a7-9a03-4f15-93bb-677d55972349","IsCreationKey":false,"Key":11.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"94ff7854-5530-4693-b6c7-85a4cb293809","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"5afd9a50-4e87-4158-9188-995a458b9cb8","IsCreationKey":false,"Key":11.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"15e39c46-f417-4f91-8f89-fbb1c3a95b23","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"b123bd2a-8243-4fea-a1ed-f02e3e5046c6","IsCreationKey":false,"Key":12.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ce104723-9ef6-49ad-bb15-e95c72ade121","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"a7f75bc6-6021-4fe2-b1c2-91f7e06b2bb9","IsCreationKey":false,"Key":12.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"81ac2e46-a3f8-4692-b7f9-bd5774f355e4","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"09897c3f-034d-4dd9-b34c-b2a1202d6854","IsCreationKey":false,"Key":13.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"9f818eb8-7488-4995-9406-f9de34e62931","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"80e05352-82f2-4f30-a08e-2ec3124a7767","IsCreationKey":false,"Key":14.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4b467b18-fb89-4862-8013-0b75b981e90d","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"6b505e2a-15f6-4f5e-b090-458a414b0cde","IsCreationKey":false,"Key":15.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5bac3f63-325c-487a-8c81-1e341edb4fc5","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"6741cc9a-4280-4228-8a55-3b31e6f5c961","IsCreationKey":false,"Key":16.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"227352db-4f54-45e0-aacd-641f4686b90c","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"71ca03fc-b257-42c3-8baf-1b457908b645","IsCreationKey":false,"Key":17.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"6e3bc119-9670-417d-8126-eda275c21ee4","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"03f73e02-2129-43c6-bf84-954aed6649a0","IsCreationKey":false,"Key":18.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b1261135-3da1-4daa-92bc-265fea10048a","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"31a6d824-9b36-4b3c-a468-eeae3eb227f9","IsCreationKey":false,"Key":19.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0299ae8e-68a6-45e7-bfa2-add68f566dff","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7f844bd7-9929-4575-b66b-d8870357f539","IsCreationKey":false,"Key":20.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f4c696b6-6297-45e4-9e28-f870b73bd37c","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"ca450a66-f275-4a00-858b-fb4fa8e83844","IsCreationKey":false,"Key":21.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e4c09f6a-bbd0-4346-b4c8-7ca4affa8156","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"f5c493d0-ad8c-4b75-9139-259e0d7775e3","IsCreationKey":false,"Key":22.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"416291bc-773d-490a-81ca-79df3a05e25f","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"860a9fd4-a27b-482f-a5d1-cb6174df4d0b","IsCreationKey":false,"Key":23.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3268cba7-8fa7-4293-9d5f-ca5d01c4f544","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"8573ac97-0427-4f23-8d3c-0f1c1805f29b","IsCreationKey":false,"Key":24.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b0681774-ed5b-4898-8543-a8ef37066ad2","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"2e2674bb-ceeb-4b07-940a-93c4b608c744","IsCreationKey":false,"Key":25.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5bdacb58-5837-43dd-9c37-2f162f4398d3","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"51d9fd85-a12d-48f2-b3ab-d2de6558b7ad","IsCreationKey":false,"Key":26.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"70c666d6-70e1-4c90-a4c1-8683c7776cd2","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"2b3c4606-78db-4266-b0d0-cb7b90372329","IsCreationKey":false,"Key":27.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"84e03fce-8b68-4cb5-995f-81efadeb9b6d","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"f89292fe-ebf8-46fc-b6d2-e0d5b601ed1d","IsCreationKey":false,"Key":28.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"54db0514-a1bf-4129-8fa8-6d637aa40b16","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"a716e7c2-4483-47ee-a24b-76427bb07a2f","IsCreationKey":false,"Key":29.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f968c0a4-0c55-4456-97de-3301ca664a00","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"44b528ab-62ca-4bb2-b9ca-27a928710f9a","IsCreationKey":false,"Key":30.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"e88c01bf-ccf5-40a7-963a-0c799b9e2dde","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"0e8e401f-dc90-448b-8917-dca72324ec7d","IsCreationKey":false,"Key":31.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"70d74a8c-1dda-4158-bdd7-dba68b11949c","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"cc0104a8-4d19-4a3b-b55a-f1ec1e2e30e5","IsCreationKey":false,"Key":32.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"0305f17d-d575-4973-9a9a-fd05b1cb51fd","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"ef1fb440-0900-4e98-b0c5-d14fcc08c093","IsCreationKey":false,"Key":33.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"dcdd4eb3-ca16-44a3-bb1b-693b7c34664c","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"ca30dc2c-021f-4d14-abf4-df83f19532ec","IsCreationKey":false,"Key":34.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"dcfea7e7-8c7b-4059-a748-bcda8abbe2fb","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"39af9af0-83cf-44d2-9dea-cdd8b1b008b1","IsCreationKey":false,"Key":35.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"ec486fd5-d7af-43ea-bcdb-c4cd8ebc4fbb","path":"sprites/spr_pokemon_master_back/spr_pokemon_master_back.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"c0702ef8-59eb-4e1a-adf9-15c84660295b","IsCreationKey":false,"Key":36.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

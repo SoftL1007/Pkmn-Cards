@@ -1,48 +1,47 @@
-// Step Event
 switch (state) {
     
     case BATTLE_STATE.START:
+        // Draw Initial Hand (Mix Strategy + Healing chance)
         repeat(3) {
-            if (array_length(player_deck) > 0) {
+            // 70% Strategy, 30% Random Healing check per draw
+            if (array_length(player_deck) > 0 && random(100) > 30) {
                 var c = player_deck[0];
                 array_delete(player_deck, 0, 1);
                 array_push(player_hand, get_card_data(c));
             } else {
-                array_push(player_hand, get_card_data("potion_hyper"));
+                // Healing Pool spawn
+                var heal_pool = ["potion_hyper", "revive"];
+                var h = heal_pool[irandom(1)];
+                array_push(player_hand, get_card_data(h));
             }
         }
-        turn_start_processed = false; // Initialize flag
+        turn_start_processed = false;
         state = BATTLE_STATE.TURN_START_DECISION;
         break;
 
     case BATTLE_STATE.TURN_START_DECISION:
-        mulligan_available = true; 
+        // The player must choose "Draw".
+        // When they say YES (in UI logic), perform this check:
+        // Handled in UI Object, but here is the logic that should happen inside the UI "YES" button:
         
-        // EXECUTE ONCE PER TURN START
+        // This State block mainly waits, but processes Start-of-Turn status damage (Poison etc.)
         if (!turn_start_processed) {
             var p = player_team[p_active_index];
-            
-            // 1. Reset Card Buffs
             p.card_buffs = { atk:1.0, def:1.0, spa:1.0, spd:1.0, spe:1.0 };
             p.recalculate_stats();
             
-            // 2. Status Damage (Burn/Poison) - Apply ONCE
+            // Status Dmg
             if (p.status_condition == "BRN" || p.status_condition == "PSN") {
-                var dmg = floor(p.max_hp / 8);
-                if (dmg < 1) dmg = 1;
+                var dmg = floor(p.max_hp / 8); if (dmg < 1) dmg = 1;
                 p.current_hp = max(0, p.current_hp - dmg);
-                battle_log = p.nickname + " is hurt by its status!";
+                battle_log = "Hurt by Status!";
             }
-            
-            turn_start_processed = true; // Lock execution until next turn
+            turn_start_processed = true;
         }
         
-        // If player died from poison at start of turn
-        if (player_team[p_active_index].is_fainted()) {
-            state = BATTLE_STATE.CHECK_FAINT;
-        }
+        if (player_team[p_active_index].is_fainted()) state = BATTLE_STATE.CHECK_FAINT;
         break;
-
+   
     case BATTLE_STATE.DISCARD_CHOICE: break;
     case BATTLE_STATE.INPUT_PHASE: break;
     case BATTLE_STATE.SWITCH_MENU: break;

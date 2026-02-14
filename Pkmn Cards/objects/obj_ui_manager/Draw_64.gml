@@ -1,63 +1,90 @@
 if (!instance_exists(obj_battle_manager)) exit;
 var mgr = obj_battle_manager;
 
+// Safety check for indices
+if (mgr.p_active_index >= array_length(mgr.player_team)) exit;
+if (mgr.e_active_index >= array_length(mgr.enemy_team)) exit;
+
 var p_mon = mgr.player_team[mgr.p_active_index];
 var e_mon = mgr.enemy_team[mgr.e_active_index];
 
 draw_set_font(fnt_game);
 var time_sec = current_time / 1000;
 
-// --- ICON HELPER FUNCTION ---
-function get_active_icons(_mon) {
+// --- STATUS ICON LOGIC EXPANDED ---
+function get_active_icons_v2(_mon) {
     var list = [];
-    // Status Indices: 3=PAR, 4=BRN, 5=PSN, 6=SLP
+    
+    // 1. Major Status Conditions (0-6 Reserved for existing or status)
+    // Mapping specific major status
     if (_mon.status_condition == "PAR") array_push(list, {idx: 3, text: ""});
-    if (_mon.status_condition == "BRN") array_push(list, {idx: 4, text: ""});
-    if (_mon.status_condition == "PSN") array_push(list, {idx: 5, text: ""});
-    if (_mon.status_condition == "SLP") array_push(list, {idx: 6, text: ""});
+    else if (_mon.status_condition == "BRN") array_push(list, {idx: 4, text: ""});
+    else if (_mon.status_condition == "PSN") array_push(list, {idx: 5, text: ""});
+    else if (_mon.status_condition == "SLP") array_push(list, {idx: 6, text: ""});
     
-    // Stat Indices: 0=Atk/SpA, 1=Def/SpD, 2=Spe
-    if (_mon.stat_stages.atk != 0) array_push(list, {idx: 0, text: (_mon.stat_stages.atk>0?"+":"") + string(_mon.stat_stages.atk)});
-    if (_mon.stat_stages.def != 0) array_push(list, {idx: 1, text: (_mon.stat_stages.def>0?"+":"") + string(_mon.stat_stages.def)});
-    if (_mon.stat_stages.spa != 0) array_push(list, {idx: 0, text: (_mon.stat_stages.spa>0?"+":"") + string(_mon.stat_stages.spa)});
-    if (_mon.stat_stages.spd != 0) array_push(list, {idx: 1, text: (_mon.stat_stages.spd>0?"+":"") + string(_mon.stat_stages.spd)});
-    if (_mon.stat_stages.spe != 0) array_push(list, {idx: 2, text: (_mon.stat_stages.spe>0?"+":"") + string(_mon.stat_stages.spe)});
+    // 2. Stat Buffs/Debuffs (Indices 0,1,2 & 7-12)
+    var s = _mon.stat_stages;
     
-    // Temp Card Buffs
-    if (_mon.card_buffs.atk > 1) array_push(list, {idx: 0, text: "Tmp"});
-    if (_mon.card_buffs.def > 1) array_push(list, {idx: 1, text: "Tmp"});
-    if (_mon.card_buffs.spe > 1) array_push(list, {idx: 2, text: "Tmp"});
+    // Attack
+    if (s.atk > 0) array_push(list, {idx: 0, text: "+" + string(s.atk)});
+    if (s.atk < 0) array_push(list, {idx: 9, text: string(s.atk)});
+    
+    // Defense
+    if (s.def > 0) array_push(list, {idx: 1, text: "+" + string(s.def)});
+    if (s.def < 0) array_push(list, {idx: 10, text: string(s.def)});
+    
+    // Sp. Atk
+    if (s.spa > 0) array_push(list, {idx: 7, text: "+" + string(s.spa)});
+    if (s.spa < 0) array_push(list, {idx: 11, text: string(s.spa)});
+    
+    // Sp. Def
+    if (s.spd > 0) array_push(list, {idx: 8, text: "+" + string(s.spd)});
+    if (s.spd < 0) array_push(list, {idx: 12, text: string(s.spd)});
+    
+    // Speed
+    if (s.spe > 0) array_push(list, {idx: 2, text: "+" + string(s.spe)});
+    if (s.spe < 0) array_push(list, {idx: 2, text: string(s.spe)}); // Assuming you might add a debuff icon for speed, otherwise reused
     
     return list;
 }
 
-var p_icons = get_active_icons(p_mon);
-var e_icons = get_active_icons(e_mon);
+var p_icons = get_active_icons_v2(p_mon);
+var e_icons = get_active_icons_v2(e_mon);
 
-// Cycle Logic (Change every 1.5s)
+// Cycle logic
 var p_icon_idx = 0; 
 if (array_length(p_icons) > 0) p_icon_idx = floor(time_sec / 1.5) % array_length(p_icons);
 var e_icon_idx = 0;
 if (array_length(e_icons) > 0) e_icon_idx = floor(time_sec / 1.5) % array_length(e_icons);
 
+// Shake vars
 var shake_x = random_range(-mgr.screen_shake, mgr.screen_shake);
 var shake_y = random_range(-mgr.screen_shake, mgr.screen_shake);
 
-// -------------------------------------------------------------------------
-// ENEMY RENDER
-// -------------------------------------------------------------------------
+// ---------------------------
+// ENEMY DRAWING
+// ---------------------------
 var e_draw_x = 1480 + shake_x + mgr.e_offset_x;
 var e_draw_y = 1100 + shake_y + mgr.e_offset_y;
 
 var e_has_debuff = e_mon.has_any_debuff();
-var e_shader_active = false;
+var e_shader_on = false;
+
+// APPLY NEW SHADER for Debuff, OR Buff shader
 if (e_has_debuff) {
-    shader_set(shd_debuff); shader_set_uniform_f(mgr.u_time_uni_debuff, time_sec); e_shader_active = true;
-} else if (e_mon.has_any_buff()) {
-    shader_set(shd_buff); shader_set_uniform_f(mgr.u_time_uni_buff, time_sec); e_shader_active = true;
+    shader_set(shd_red_throb); // UPDATED NAME
+    var u_time_red = shader_get_uniform(shd_red_throb, "u_time");
+    shader_set_uniform_f(u_time_red, time_sec);
+    e_shader_on = true;
+} 
+else if (e_mon.has_any_buff()) {
+    shader_set(shd_buff); 
+    shader_set_uniform_f(mgr.u_time_uni_buff, time_sec);
+    e_shader_on = true;
 }
+
 draw_sprite_ext(spr_pokemon_master_back, e_mon.sprite_frame, e_draw_x, e_draw_y, 2, 2, 0, c_white, 1);
-if (e_shader_active) shader_reset();
+if (e_shader_on) shader_reset();
 
 if (mgr.e_flash_alpha > 0) {
     gpu_set_fog(true, c_white, 0, 0); 
@@ -65,36 +92,40 @@ if (mgr.e_flash_alpha > 0) {
     gpu_set_fog(false, c_white, 0, 0); 
 }
 
-// ENEMY UI & ICONS (Top Left)
+// Enemy HUD & Icon
 draw_set_color(c_dkgray); draw_rectangle(0, 0, 600, 140, false);
 draw_set_color(c_white); draw_text(20, 10, e_mon.species_name + " Lv." + string(e_mon.level));
 draw_set_color(c_black); draw_rectangle(20, 50, 500, 80, false);
 draw_healthbar(20, 50, 500, 80, (e_mon.current_hp / e_mon.max_hp) * 100, c_black, c_red, c_green, 0, true, true);
 
-// Enemy Icons (To the right of the HP box)
 if (array_length(e_icons) > 0) {
-    var icon_data = e_icons[e_icon_idx];
-    draw_sprite_ext(spr_status_icons, icon_data.idx, 620, 70, 2, 2, 0, c_white, 1);
-    draw_set_color(c_white); 
-    draw_text(660, 70, icon_data.text);
+    var idata = e_icons[e_icon_idx];
+    draw_sprite_ext(spr_status_icons, idata.idx, 620, 70, 2, 2, 0, c_white, 1);
+    draw_text(660, 70, idata.text);
 }
 
-
-// -------------------------------------------------------------------------
-// PLAYER RENDER
-// -------------------------------------------------------------------------
+// ---------------------------
+// PLAYER DRAWING
+// ---------------------------
 var p_draw_x = 400 + shake_x + mgr.p_offset_x;
 var p_draw_y = 1100 + shake_y + mgr.p_offset_y;
 
 var p_has_debuff = p_mon.has_any_debuff();
-var p_shader_active = false;
+var p_shader_on = false;
+
 if (p_has_debuff) {
-    shader_set(shd_debuff); shader_set_uniform_f(mgr.u_time_uni_debuff, time_sec); p_shader_active = true;
+    shader_set(shd_red_throb);
+    var u_time_red = shader_get_uniform(shd_red_throb, "u_time");
+    shader_set_uniform_f(u_time_red, time_sec);
+    p_shader_on = true;
 } else if (p_mon.has_any_buff()) {
-    shader_set(shd_buff); shader_set_uniform_f(mgr.u_time_uni_buff, time_sec); p_shader_active = true;
+    shader_set(shd_buff); 
+    shader_set_uniform_f(mgr.u_time_uni_buff, time_sec);
+    p_shader_on = true;
 }
+
 draw_sprite_ext(spr_pokemon_master_front, p_mon.sprite_frame, p_draw_x, p_draw_y, 2, 2, 0, c_white, 1);
-if (p_shader_active) shader_reset();
+if (p_shader_on) shader_reset();
 
 if (mgr.p_flash_alpha > 0) {
     gpu_set_fog(true, c_white, 0, 0);
@@ -102,20 +133,27 @@ if (mgr.p_flash_alpha > 0) {
     gpu_set_fog(false, c_white, 0, 0);
 }
 
-// PLAYER UI & ICONS (Bottom Right)
+// Player HUD
 draw_set_color(c_dkgray); draw_rectangle(1300, 700, 1920, 850, false);
 draw_set_color(c_white);
 draw_text(1320, 710, p_mon.species_name + " Lv." + string(p_mon.level));
 draw_text(1320, 740, string(p_mon.current_hp) + "/" + string(p_mon.max_hp));
 draw_healthbar(1400, 770, 1800, 810, (p_mon.current_hp / p_mon.max_hp)*100, c_black, c_red, c_green, 0, true, true);
 
-// Player Icons (To the left of the HP box)
 if (array_length(p_icons) > 0) {
-    var icon_data = p_icons[p_icon_idx];
-    draw_sprite_ext(spr_status_icons, icon_data.idx, 1250, 770, 2, 2, 0, c_white, 1);
-    draw_set_color(c_white); 
-    draw_text(1220, 770, icon_data.text);
+    var idata = p_icons[p_icon_idx];
+    draw_sprite_ext(spr_status_icons, idata.idx, 1250, 770, 2, 2, 0, c_white, 1);
+    draw_text(1220, 770, idata.text);
 }
+
+// ---------------------------
+// LOG, CARDS, INPUTS (Inherited from your existing code structure)
+// ---------------------------
+// Note: Continue passing the Draw events for Cards, Animations, Menus exactly as established previously.
+// The key changes above were specific to Status Visuals and Shaders.
+// Ensure your BATTLE_STATE blocks (REVIVE_MENU, etc.) remain below this section.
+// (I will assume you append the existing BATTLE_STATE drawing code here).
+// ---------------------------
 
 
 // -------------------------------------------------------------------------
@@ -186,20 +224,31 @@ else if (mgr.state == BATTLE_STATE.TURN_START_DECISION) {
     draw_set_color(c_black); draw_text(800, 520, "YES");
     if (mouse_check_button_pressed(mb_left)) {
         var mx = device_mouse_x_to_gui(0); var my = device_mouse_y_to_gui(0);
-        if (mx > 760 && mx < 910 && my > 500 && my < 580) {
-            if (array_length(mgr.player_hand) >= mgr.max_hand_size) {
-                mgr.state = BATTLE_STATE.DISCARD_CHOICE;
-                mgr.battle_log = "Hand Full! Discard one card to draw.";
-            } else {
-                if (array_length(mgr.player_deck) > 0) {
-                     array_push(mgr.player_hand, get_card_data(mgr.player_deck[0]));
-                     array_delete(mgr.player_deck, 0, 1);
-                } else {
-                     array_push(mgr.player_hand, get_card_data("potion_hyper"));
-                }
-                mgr.state = BATTLE_STATE.INPUT_PHASE;
-            }
+if (mx > 760 && mx < 910 && my > 500 && my < 580) { // YES clicked
+    if (array_length(mgr.player_hand) >= mgr.max_hand_size) {
+        mgr.state = BATTLE_STATE.DISCARD_CHOICE;
+        mgr.battle_log = "Hand Full!";
+    } else {
+        // DRAW LOGIC
+        // Chance for Healing Item Spawning INDEPENDENT of deck
+        var spawn_heal = (random(100) < 25); // 25% chance to find loot
+        
+        if (spawn_heal) {
+             var h = choose("potion_hyper", "revive");
+             array_push(mgr.player_hand, get_card_data(h));
+             mgr.battle_log = "Found a " + h + "!";
+        } 
+        else if (array_length(mgr.player_deck) > 0) {
+             array_push(mgr.player_hand, get_card_data(mgr.player_deck[0]));
+             array_delete(mgr.player_deck, 0, 1);
+             mgr.battle_log = "Drew card from deck!";
+        } else {
+             mgr.battle_log = "Deck empty!";
         }
+        
+        mgr.state = BATTLE_STATE.INPUT_PHASE;
+    }
+}
     }
     // NO
     draw_set_color(c_red); draw_rectangle(1010, 500, 1160, 580, false);
