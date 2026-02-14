@@ -42,7 +42,7 @@
     {"id":{"name":"scr_definitions","path":"scripts/scr_definitions/scr_definitions.yy",},},
     {"id":{"name":"scr_mechanics","path":"scripts/scr_mechanics/scr_mechanics.yy",},},
     {"id":{"name":"shd_buff","path":"shaders/shd_buff/shd_buff.yy",},},
-    {"id":{"name":"shd_debuff","path":"shaders/shd_debuff/shd_debuff.yy",},},
+    {"id":{"name":"shd_mirage","path":"shaders/shd_mirage/shd_mirage.yy",},},
     {"id":{"name":"shd_red_throb","path":"shaders/shd_red_throb/shd_red_throb.yy",},},
     {"id":{"name":"spr_battlebackground","path":"sprites/spr_battlebackground/spr_battlebackground.yy",},},
     {"id":{"name":"spr_cards","path":"sprites/spr_cards/spr_cards.yy",},},

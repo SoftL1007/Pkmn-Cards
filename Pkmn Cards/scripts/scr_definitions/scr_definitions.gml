@@ -10,9 +10,10 @@ enum BATTLE_STATE {
     DISCARD_CHOICE,      
     INPUT_PHASE,         
     SWITCH_MENU,
-    REVIVE_MENU,         // NEW: Menu for Revive Card
-    RESOLVE_PHASE,       
-    ANIMATION_WAIT,      
+    REVIVE_MENU,        
+    RESOLVE_PHASE,
+    ANIMATION_WAIT,
+    ANIMATION_SWITCH, // <--- This was missing!
     CHECK_FAINT,
     WIN_LOSS,
     WAIT
@@ -61,9 +62,8 @@ function BattleCard(_id, _name, _desc, _scope, _type, _rarity, _icon_idx, _effec
     effect_data = _effect_data; // Struct for specific logic (e.g. trap trigger)
 }
 
-// Update Pokemon Struct to hold a Trap Slot
+// Update Pokemon Struct to hold a Trap Slot AND Helper for Stats
 function Pokemon(_species_data, _level, _moves) constructor {
-    // ... (Keep existing stats/init code) ...
     species_name = _species_data.name;
     nickname = species_name; 
     sprite_frame = _species_data.sprite_index; 
@@ -71,6 +71,9 @@ function Pokemon(_species_data, _level, _moves) constructor {
     level = _level;
     max_hp = floor((2 * _species_data.hp * level) / 100 + level + 10);
     current_hp = max_hp;
+    
+    // *** FIX: This ensures the UI never crashes trying to read the health bar ***
+    display_hp = current_hp; 
     
     base_stats = {
         atk: floor((2 * _species_data.atk * level) / 100 + 5),
@@ -88,14 +91,11 @@ function Pokemon(_species_data, _level, _moves) constructor {
     status_turn = 0;
     
     moves = _moves; 
-    
-    // NEW: TRAP SLOT
-    active_trap = undefined; // Will hold a BattleCard struct if a trap is set
+    active_trap = undefined; 
     
     static is_fainted = function() { return current_hp <= 0; }
     
     static recalculate_stats = function() {
-        // ... (Keep existing stat calc logic) ...
         var stat_keys = ["atk", "def", "spa", "spd", "spe"];
         for (var i = 0; i < array_length(stat_keys); i++) {
             var key = stat_keys[i];
@@ -110,6 +110,16 @@ function Pokemon(_species_data, _level, _moves) constructor {
         }
     }
     recalculate_stats();
+    
+    static modify_stage = function(_stat, _amount) {
+        if (!variable_struct_exists(stat_stages, _stat)) return;
+        var current = variable_struct_get(stat_stages, _stat);
+        current += _amount;
+        if (current > 6) current = 6;
+        if (current < -6) current = -6;
+        variable_struct_set(stat_stages, _stat, current);
+        recalculate_stats(); 
+    }
     
     static has_any_buff = function() {
         var keys = ["atk", "def", "spa", "spd", "spe"];

@@ -1,4 +1,4 @@
-
+randomize();
 
 // 1. MASTER LISTS
 all_species_ids = [

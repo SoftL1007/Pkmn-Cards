@@ -71,18 +71,25 @@ mulligan_available = true;
 event_card_active = undefined;
 event_card_timer = 0;
 
-// *** NEW: HAND ANIMATION ARRAYS ***
-// We initialize this with off-screen values (1200) so cards float up when drawn
+// Hand Visual Arrays
 hand_visual_y = array_create(10, 1200); 
 
-// State
+// State & Indexes
 if (!waiting_for_connection) state = BATTLE_STATE.START;
 p_active_index = 0;
 e_active_index = 0;
 action_queue = [];
 turn_start_processed = false;
 
-// Selection Variables (Set to -1)
+// Visual Scaling & Switch Logic (NEW)
+p_scale = 1.0; 
+e_scale = 1.0; 
+switch_phase = 0; // 0=None, 1=Retract, 2=Expand
+switch_processing_actor = "none";
+switch_target_index = -1;
+switch_timer = 0;
+
+// Selection Variables
 selected_move = -1;
 selected_card = -1; 
 selected_switch_target = -1;
@@ -112,6 +119,32 @@ online_enemy_ready = false;
 online_my_action = undefined;
 online_enemy_action = { move_index: -1, card_index: -1, switch_index: -1, card_id_str: "none" };
 
+// --- PARTICLE SYSTEM SETUP ---
+// We create the system here, we draw it manually in Draw GUI
+global.part_sys = part_system_create();
+part_system_automatic_draw(global.part_sys, false); 
+
+// 1. AURA PARTICLES (Selected Card) - Yellow Aura
+global.pt_aura = part_type_create();
+part_type_shape(global.pt_aura, pt_shape_pixel);
+part_type_size(global.pt_aura, 1, 2, -0.05, 0); 
+part_type_color3(global.pt_aura, c_yellow, c_orange, c_white);
+part_type_alpha3(global.pt_aura, 1, 0.8, 0);
+part_type_speed(global.pt_aura, 1, 2.5, 0, 0);
+part_type_direction(global.pt_aura, 80, 100, 0, 0); // Move Upwards
+part_type_life(global.pt_aura, 20, 40);
+
+// 2. SWITCH POOF (Explosion) - White Poof
+// FIXED ERROR: Uses part_type_color1 now instead of RGB crash
+global.pt_poof = part_type_create();
+part_type_shape(global.pt_poof, pt_shape_disk);
+part_type_size(global.pt_poof, 0.2, 0.5, -0.01, 0);
+part_type_color1(global.pt_poof, c_white); 
+part_type_alpha2(global.pt_poof, 1, 0);
+part_type_speed(global.pt_poof, 2, 5, -0.1, 0);
+part_type_direction(global.pt_poof, 0, 360, 0, 0); 
+part_type_life(global.pt_poof, 15, 30);
+
 function receive_network_action(_data) {
     online_enemy_action = _data;
     online_enemy_ready = true;
@@ -119,3 +152,15 @@ function receive_network_action(_data) {
         state = BATTLE_STATE.RESOLVE_PHASE;
     }
 }
+
+discard_selected_index = -1; // Tracks which card we want to throw away
+
+
+text_char_delay = 2; // Higher = Slower typing (2 frames per char)
+text_timer = 0;
+switch_delay_timer = 0; // To pause before shrinking/expanding
+
+
+// RESHUFFLE ANIMATION VARIABLES
+reshuffle_anim_active = false;
+reshuffle_timer = 0;

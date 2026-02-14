@@ -29,7 +29,7 @@ switch(state) {
         break;
 
     // ============================================================
-    // MODE SELECT (Updated with Online)
+    // MODE SELECT
     // ============================================================
     case MENU_STATE.MODE_SELECT:
         draw_set_halign(fa_center); draw_set_color(c_white);
@@ -48,18 +48,15 @@ switch(state) {
         if (draw_button_juicy(860, 550, 200, 80, "ONLINE / LAN", mx, my, click)) {
              if (check_team_valid()) {
                 state = MENU_STATE.ONLINE_LOBBY;
-                // Reset IP typing stuff
                 is_typing_ip = false;
                 keyboard_string = "";
              }
         }
         
-        // BACK
         if (draw_button_juicy(860, 800, 200, 80, "BACK", mx, my, click)) {
             state = MENU_STATE.MAIN;
         }
         
-        // Validation Warning
         if (!check_team_valid()) {
             draw_set_color(c_red); draw_text(960, 300, "TEAM IS EMPTY! GO TO BUILDER.");
         }
@@ -67,42 +64,34 @@ switch(state) {
         break;
 
     // ============================================================
-    // ONLINE LOBBY (New)
+    // ONLINE LOBBY
     // ============================================================
     case MENU_STATE.ONLINE_LOBBY:
         draw_set_halign(fa_center); draw_set_color(c_white);
         draw_text(960, 150, "MULTIPLAYER LOBBY");
         draw_text(960, 200, "(Direct IP Connection)");
         
-        // --- HOST BUTTON ---
         draw_text(960, 350, "Option A: Host a Game");
         if (draw_button_juicy(860, 400, 200, 80, "HOST SERVER", mx, my, click)) {
-            // Create Network Manager as HOST
             if (!instance_exists(obj_network_manager)) {
                 var net = instance_create_depth(0,0,0, obj_network_manager);
                 net.is_server = true;
-                net.start_server(7777); // Port 7777
+                net.start_server(7777); 
             }
             obj_game_data.game_mode = "ONLINE";
-            room_goto(rm_battle); // Go to battle room to wait for connection
+            room_goto(rm_battle);
         }
         
-        // --- JOIN BUTTON ---
         draw_text(960, 600, "Option B: Join a Game");
-        
-        // IP Input Box
         var ip_col = is_typing_ip ? c_white : c_gray;
-        draw_set_color(ip_col); draw_rectangle(810, 640, 1110, 690, false); // Box
+        draw_set_color(ip_col); draw_rectangle(810, 640, 1110, 690, false);
         draw_set_color(c_black); draw_text(960, 665, join_ip_string + (is_typing_ip ? "|" : ""));
         
-        // Click to type
         if (point_in_rectangle(mx, my, 810, 640, 1110, 690) && click) {
-            is_typing_ip = true;
-            keyboard_string = "";
+            is_typing_ip = true; keyboard_string = "";
         }
         
         if (draw_button_juicy(860, 720, 200, 80, "JOIN GAME", mx, my, click)) {
-             // Create Network Manager as CLIENT
              if (!instance_exists(obj_network_manager)) {
                 var net = instance_create_depth(0,0,0, obj_network_manager);
                 net.is_server = false;
@@ -112,7 +101,6 @@ switch(state) {
             room_goto(rm_battle);
         }
 
-        // BACK
         if (draw_button_juicy(860, 900, 200, 80, "BACK", mx, my, click)) {
             state = MENU_STATE.MODE_SELECT;
         }
@@ -120,98 +108,105 @@ switch(state) {
         break;
         
     // ============================================================
-    // TEAM BUILDER (Existing Code - Collapsed for brevity)
+    // TEAM BUILDER
     // ============================================================
     case MENU_STATE.TEAM_BUILDER:
-        // ... (Keep your existing Team Builder Draw Code exactly as it was) ...
-        // I won't repeat the huge loop here to save space, but 
-        // DO NOT DELETE IT. Paste your previous Team Builder code here.
-        
-        // Just ensuring the "Back" button goes to Main
         if (draw_button_juicy(50, 1000, 200, 60, "BACK", mx, my, click)) {
             state = MENU_STATE.MAIN;
         }
-        
-        // Render the builder...
-        draw_team_builder(mx, my, click); // We'll move the logic to a helper function below
+        draw_team_builder(mx, my, click);
         break;
 }
 
-/// @func draw_team_builder(_mx, _my, _click)
-/// Helper to keep the switch statement clean
+// ----------------------------------------
+// DRAW HELPER: TEAM BUILDER CONTENT
+// ----------------------------------------
 function draw_team_builder(_mx, _my, _click) {
-    // PASTE THE PREVIOUS TEAM BUILDER DRAW CODE HERE
-    // (Everything from your previous "case MENU_STATE.TEAM_BUILDER")
-    
-    // --- LEFT: PLAYER TEAM ---
-    draw_set_color(c_white); draw_text(50, 50, "YOUR TEAM");
+    // 1. Draw Player Slots (Left Side)
+    draw_set_color(c_white); draw_text(50, 50, "YOUR TEAM (Click X to remove)");
     
     for(var i=0; i<6; i++) {
         var box_x = 100;
         var box_y = 150 + (i * 140);
-        
         var is_sel = (selected_slot == i);
         var pulse = is_sel ? (sin(current_time/200)*5) : 0;
-        var col = is_sel ? c_orange : c_dkgray;
         
-        draw_set_color(col);
+        // Slot Background
+        draw_set_color(is_sel ? c_orange : c_dkgray);
         draw_rectangle(box_x - pulse, box_y - pulse, box_x + 500 + pulse, box_y + 120 + pulse, false);
         
         var p_data = obj_game_data.player_team[i];
-        draw_set_color(c_white);
         
         if (p_data != undefined) {
+            draw_set_color(c_white);
             draw_text(box_x + 20, box_y + 20, p_data.nickname);
-            draw_text(box_x + 20, box_y + 60, "Lv. 50 " + string(p_data.types));
-            if (draw_button_juicy(box_x+400, box_y+20, 80, 80, "X", _mx, _my, _click)) {
-                obj_game_data.player_team[i] = undefined;
-            }
-            if (point_in_rectangle(_mx, _my, box_x, box_y, box_x+400, box_y+120) && _click) selected_slot = i;
+            draw_text(box_x + 20, box_y + 60, "Lv. 50");
+            
+            // Delete Button (Small Red Box)
+            var del_hover = point_in_rectangle(_mx, _my, box_x+400, box_y+20, box_x+450, box_y+70);
+            draw_set_color(del_hover ? c_red : c_maroon);
+            draw_rectangle(box_x+400, box_y+20, box_x+450, box_y+70, false);
+            draw_set_color(c_white); draw_text(box_x+415, box_y+30, "X");
+            
+            if (del_hover && _click) obj_game_data.player_team[i] = undefined;
+            if (!del_hover && point_in_rectangle(_mx, _my, box_x, box_y, box_x+400, box_y+120) && _click) selected_slot = i;
         } else {
-            draw_text(box_x + 20, box_y + 40, "EMPTY SLOT");
+            draw_set_color(c_white); draw_text(box_x + 20, box_y + 40, "EMPTY SLOT");
             if (point_in_rectangle(_mx, _my, box_x, box_y, box_x+500, box_y+120) && _click) selected_slot = i;
         }
     }
     
-    // --- RIGHT: DATABASE TABS ---
-    var tab_w = 300; var tab_h = 60; var tab_x_start = 800;
+    // 2. Database Tabs (Right Side)
+    var tab_w = 300; var tab_h = 60; var tab_x = 800;
     
-    if (draw_button_juicy(tab_x_start, 50, tab_w, tab_h, "GEN 1", _mx, _my, _click)) { current_tab = 0; scroll_offset = 0; }
-    if (current_tab == 0) { draw_set_color(c_lime); draw_rectangle(tab_x_start, 110, tab_x_start+tab_w, 115, false); }
+    // Tab 1: Gen 1
+    var t1_hover = draw_button_juicy(tab_x, 50, tab_w, tab_h, "GEN 1", _mx, _my, _click);
+    if (t1_hover) { current_tab = 0; scroll_offset = 0; }
+    if (current_tab == 0) { draw_set_color(c_lime); draw_rectangle(tab_x, 110, tab_x+tab_w, 115, false); }
     
-    if (draw_button_juicy(tab_x_start+310, 50, tab_w, tab_h, "GEN 2", _mx, _my, _click)) { current_tab = 1; scroll_offset = 0; }
-    if (current_tab == 1) { draw_set_color(c_lime); draw_rectangle(tab_x_start+310, 110, tab_x_start+310+tab_w, 115, false); }
+    // Tab 2: Gen 2
+    var t2_hover = draw_button_juicy(tab_x+310, 50, tab_w, tab_h, "GEN 2", _mx, _my, _click);
+    if (t2_hover) { current_tab = 1; scroll_offset = 0; }
+    if (current_tab == 1) { draw_set_color(c_lime); draw_rectangle(tab_x+310, 110, tab_x+310+tab_w, 115, false); }
     
-    if (draw_button_juicy(tab_x_start+620, 50, tab_w, tab_h, "GEN 3", _mx, _my, _click)) { current_tab = 2; scroll_offset = 0; }
-    if (current_tab == 2) { draw_set_color(c_lime); draw_rectangle(tab_x_start+620, 110, tab_x_start+620+tab_w, 115, false); }
-
-    // --- RIGHT: POKEMON LIST ---
-    draw_set_color(c_dkgray); draw_rectangle(800, 120, 1800, 1000, false);
+    // Tab 3: Gen 3
+    var t3_hover = draw_button_juicy(tab_x+620, 50, tab_w, tab_h, "GEN 3", _mx, _my, _click);
+    if (t3_hover) { current_tab = 2; scroll_offset = 0; }
+    if (current_tab == 2) { draw_set_color(c_lime); draw_rectangle(tab_x+620, 110, tab_x+620+tab_w, 115, false); }
     
-    var start_index_master = 0; var end_index_master = 0;
-    if (current_tab == 0) { start_index_master = 0; end_index_master = 12; }
-    else if (current_tab == 1) { start_index_master = 12; end_index_master = 24; }
-    else if (current_tab == 2) { start_index_master = 24; end_index_master = 36; }
+    // 3. Database List
+    draw_set_color(c_black); draw_set_alpha(0.5);
+    draw_rectangle(800, 120, 1720, 1000, false); draw_set_alpha(1.0);
     
+    var start_i = 0; var end_i = 0;
+    if (current_tab == 0) { start_i = 0; end_i = 12; }      // Indices based on all_species_ids in Game Data
+    if (current_tab == 1) { start_i = 12; end_i = 24; }
+    if (current_tab == 2) { start_i = 24; end_i = 36; }
+    
+    var count = 0;
     for (var j = 0; j < items_per_page; j++) {
-        var actual_list_idx = start_index_master + scroll_offset + j;
-        if (actual_list_idx >= end_index_master) break;
+        var idx = start_i + scroll_offset + j;
+        if (idx >= end_i) break;
         
-        var name_str = obj_game_data.all_species_ids[actual_list_idx];
-        var ly = 140 + (j * 60);
+        var s_id = obj_game_data.all_species_ids[idx];
+        var s_data = get_pokemon_species(s_id); // Get name from ID
+        var ly = 140 + (j * 70);
         
+        // If we have a slot selected, this button assigns the Pokemon. Else, just viewing.
         if (selected_slot != -1) {
-            if (draw_button_juicy(820, ly, 900, 50, name_str, _mx, _my, _click)) {
-                with(obj_game_data) set_player_slot(other.selected_slot, name_str);
+            if (draw_button_juicy(820, ly, 880, 60, string_upper(s_data.name), _mx, _my, _click)) {
+                with(obj_game_data) set_player_slot(other.selected_slot, s_id);
             }
         } else {
-            draw_set_color(c_black); draw_rectangle(820, ly, 1720, ly+50, false);
-            draw_set_color(c_gray); draw_text(840, ly+10, name_str);
+            draw_set_color(c_gray); draw_rectangle(820, ly, 1700, ly+60, false);
+            draw_set_color(c_white); draw_text(840, ly+20, string_upper(s_data.name));
         }
     }
 }
 
-// Helper to check if team is valid
+// ----------------------------------------
+// CHECK TEAM VALID
+// ----------------------------------------
 function check_team_valid() {
     for(var i=0; i<6; i++) {
         if (obj_game_data.player_team[i] != undefined) return true;
