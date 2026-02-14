@@ -1,5 +1,4 @@
-/// @desc Persistent Data & Team Holder
-randomize();
+
 
 // 1. MASTER LISTS
 all_species_ids = [
@@ -58,22 +57,31 @@ function prepare_local_battle() {
     for (var i = 0; i < 6; i++) if (player_team[i] != undefined) valid_count++;
     if (valid_count == 0) set_player_slot(0, "charizard");
     
-    // Generate AI
-    enemy_team = [];
-    repeat(6) {
-        var r_id = all_species_ids[irandom(array_length(all_species_ids)-1)];
-        var s_data = get_pokemon_species(r_id);
-        var m_moves = [];
-        if (variable_struct_exists(s_data, "move_ids")) {
-            for(var k=0; k<array_length(s_data.move_ids); k++) array_push(m_moves, get_move_data(s_data.move_ids[k]));
-        }
-        array_push(enemy_team, new Pokemon(s_data, 50, m_moves));
-    }
-    
-    // Reset and Shuffle Deck
+    // Reset Deck
     player_deck = [];
     array_copy(player_deck, 0, master_deck_list, 0, array_length(master_deck_list));
     deck_shuffle();
+
+    // --- NEW LOGIC START ---
+    if (game_mode == "ONLINE") {
+        // DO NOT generate random enemies.
+        // Wait for obj_network_manager to provide the team.
+        enemy_team = []; // Clear it, will be filled in Battle Room Start
+    } 
+    else {
+        // "LOCAL" mode - Generate Random AI
+        enemy_team = [];
+        repeat(6) {
+            var r_id = all_species_ids[irandom(array_length(all_species_ids)-1)];
+            var s_data = get_pokemon_species(r_id);
+            var m_moves = [];
+            if (variable_struct_exists(s_data, "move_ids")) {
+                for(var k=0; k<array_length(s_data.move_ids); k++) array_push(m_moves, get_move_data(s_data.move_ids[k]));
+            }
+            array_push(enemy_team, new Pokemon(s_data, 50, m_moves));
+        }
+    }
+    // --- NEW LOGIC END ---
 }
 
 function deck_shuffle() {

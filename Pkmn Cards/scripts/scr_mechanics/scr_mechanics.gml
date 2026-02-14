@@ -255,17 +255,21 @@ function calculate_move_result(_attacker, _defender, _move) {
         
         // Secondary Condition Change
         if (variable_struct_exists(_move.effect, "condition") && _move.effect.condition != "none") {
-             result.condition_change = {
+            result.condition_change = {
                 condition: _move.effect.condition,
                 target: _move.effect.target
             };
-            if (_move.effect.condition == "PAR") result.message += " Paralyzed!";
-            if (_move.effect.condition == "BRN") result.message += " Burned!";
-            if (_move.effect.condition == "PSN") result.message += " Poisoned!";
-            if (_move.effect.condition == "SLP") result.message += " Fell asleep!";
+
+            switch (_move.effect.condition) {
+                case "PAR": result.message += " The foe was paralyzed!"; break;
+                case "BRN": result.message += " The foe was burned!"; break;
+                case "PSN": result.message += " The foe was poisoned!"; break;
+                case "SLP": result.message += " The foe fell asleep!"; break;
+                case "CNF": result.message += " The foe became confused!"; break;
+            }
         }
     }
-    
+
     return result;
 }
 
@@ -275,3 +279,5 @@ function array_contains(_arr, _val) {
     }
     return false;
 }
+
+

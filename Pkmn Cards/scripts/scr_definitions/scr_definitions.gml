@@ -129,3 +129,14 @@ function Pokemon(_species_data, _level, _moves) constructor {
         return false;
     }
 }
+
+// --- NETWORK PACKET HEADERS ---
+enum NETWORK_MSG {
+    HANDSHAKE,      // "Hello, I am here."
+    TEAM_DATA,      // "Here is my team of 6 Pokemon."
+    START_GAME,     // "Both teams are ready, let's fight!"
+    SUBMIT_ACTION,  // "I chose to use Flamethrower."
+    SYNC_TURN,      // "Here is what happened this turn (Damage, Crits, etc)."
+    REMATCH,        // "Let's play again."
+    DISCONNECT      // "I rage quit."
+}
