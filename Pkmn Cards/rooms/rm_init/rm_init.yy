@@ -17,8 +17,8 @@
   ],
   "name":"rm_init",
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"Rooms",
+    "path":"folders/Rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

@@ -11,31 +11,112 @@ if (array_length(action_queue) > 0) {
          }
     }
     
-    if (act.type == ACTION_TYPE.CARD) {
+if (act.type == ACTION_TYPE.CARD) {
         battle_log = "Player used " + act.data.name + "!";
-        p_flash_alpha = 0.8; 
-        if (act.data.id == "revive") {
-             // Target is passed in 'act.target'
-             act.target.current_hp = floor(act.target.max_hp * 0.3);
-             battle_log += " " + act.target.nickname + " revived!";
-        }
-        else if (act.data.id == "potion_hyper") {
-            act.target.current_hp = min(act.target.current_hp + 200, act.target.max_hp);
-            battle_log += " Healed!";
-        }
-        else if (act.data.id == "x_atk") { act.target.card_buffs.atk = 1.5; battle_log += " Atk Up!"; }
-        else if (act.data.id == "x_def") { act.target.card_buffs.def = 1.5; battle_log += " Def Up!"; }
-        else if (act.data.id == "x_spd") { act.target.card_buffs.spe = 1.5; battle_log += " Spe Up!"; }
         
-        act.target.recalculate_stats();
+        // --- HEALING ---
+        if (act.data.type == CARD_TYPE.EVENT) {
+            if (string_pos("potion", act.data.id) != 0) {
+                // Parse amount logic or manual switch
+                var heal_amt = 20;
+                if (act.data.id == "potion_super") heal_amt = 60;
+                if (act.data.id == "potion_hyper") heal_amt = 200;
+                if (act.data.id == "potion_max" || act.data.id == "full_restore") heal_amt = 9999;
+                
+                act.target.current_hp = min(act.target.max_hp, act.target.current_hp + heal_amt);
+                battle_log += " Healed!";
+                
+                if (act.data.id == "full_restore" || act.data.id == "heal_par" || act.data.id == "heal_brn" || act.data.id == "heal_psn") {
+                    act.target.status_condition = "NONE";
+                    battle_log += " Status Cured!";
+                }
+            }
+        }
+        
+        // --- BUFFS / DEBUFFS (MAGIC) ---
+        if (act.data.type == CARD_TYPE.MAGIC && variable_struct_exists(act.data, "effect_data")) {
+            var eff = act.data.effect_data;
+            
+            // Stat Change
+            if (variable_struct_exists(eff, "stat")) {
+                var val = eff.val;
+                if (eff.stat == "both_def") {
+                    variable_struct_set(act.target.stat_stages, "def", clamp(act.target.stat_stages.def+val, -6, 6));
+                    variable_struct_set(act.target.stat_stages, "spd", clamp(act.target.stat_stages.spd+val, -6, 6));
+                    battle_log += " Defenses rose!";
+                } else {
+                    var curr = variable_struct_get(act.target.stat_stages, eff.stat);
+                    variable_struct_set(act.target.stat_stages, eff.stat, clamp(curr + val, -6, 6));
+                    battle_log += (val>0) ? " Stat rose!" : " Stat fell!";
+                }
+                act.target.recalculate_stats();
+            }
+            
+            // Status
+            if (variable_struct_exists(eff, "status")) {
+                if (act.target.status_condition == "NONE") {
+                    act.target.status_condition = eff.status;
+                    battle_log += " Applied " + eff.status;
+                }
+            }
+        }
     }
     else if (act.type == ACTION_TYPE.ATTACK) {
-        // ... (Same attack logic as previous) ...
-        // COPY PREVIOUS ATTACK LOGIC HERE (Checking Sleep/Para etc)
-        // For brevity in copy-paste, I assume you have the previous attack block.
-        // It hasn't changed logic-wise, just ensure it's here.
         
-        // RE-PASTING ATTACK LOGIC FOR SAFETY:
+        // --- TRAP CHECK ---
+        var trap_triggered = false;
+        var t_mon = act.target; // The defender (who might have the trap)
+        
+        if (t_mon.active_trap != undefined) {
+            var tr = t_mon.active_trap;
+            var tr_data = tr.effect_data;
+            var trigger_match = false;
+            
+            // Check Conditions
+            var cat = get_gen3_category(act.data.type);
+            var contact = (cat == "PHYSICAL"); // Simplified contact check
+            
+            if (tr_data.trigger == "any_atk") trigger_match = true;
+            if (tr_data.trigger == "phys_atk" && cat == "PHYSICAL") trigger_match = true;
+            if (tr_data.trigger == "spec_atk" && cat == "SPECIAL") trigger_match = true;
+            if (tr_data.trigger == "contact" && contact) trigger_match = true;
+            
+            if (trigger_match) {
+                battle_log = "Trap Activated! " + tr.name + "!";
+                t_mon.active_trap = undefined; // Consume Trap
+                trap_triggered = true;
+                
+                // Effect Logic
+                if (tr_data.effect == "block") {
+                    battle_log += " Attack blocked!";
+                    alarm[0] = 60; 
+                    exit; // Stop attack completely
+                }
+                else if (tr_data.effect == "reflect") {
+                    // Calculate damage theoretically to reflect it?
+                    // Simplified: Deal fixed dmg
+                    act.actor.current_hp = max(0, act.actor.current_hp - 50); 
+                    battle_log += " Reflected damage!";
+                    alarm[0] = 60;
+                    exit; // Stop incoming attack
+                }
+                else if (tr_data.effect == "paralyze") {
+                    if (act.actor.status_condition == "NONE") act.actor.status_condition = "PAR";
+                }
+                else if (tr_data.effect == "damage_8") {
+                    act.actor.current_hp -= floor(act.actor.max_hp/8);
+                }
+                // Note: Contact traps (Static/Rough Skin) usually happen AFTER damage.
+                // But "Counter" happens INSTEAD of damage. 
+                // Adjust flow based on strict preference. For now, Block/Reflect stops attack. Others let it pass.
+                if (tr_data.effect != "paralyze" && tr_data.effect != "burn" && tr_data.effect != "poison" && tr_data.effect != "damage_8") {
+                    // It was a negation trap
+                    alarm[0] = 60; exit;
+                }
+            }
+        }
+        
+        // ... (Proceed to standard Attack Logic) ...
         var can_move = true;
         if (act.actor.status_condition == "SLP") {
             act.actor.status_turn--;
@@ -79,30 +160,26 @@ if (array_length(action_queue) > 0) {
                  battle_log += " " + result.message;
             } 
             else {
-                if (result.hit) {
-                    act.target.current_hp = max(0, act.target.current_hp - result.damage);
-                    if (result.damage > 0) {
-                        screen_shake = 10;
-                        if (act.owner == "PLAYER") e_flash_alpha = 1.0; else p_flash_alpha = 1.0;
-                    }
-                    battle_log += " Dealt " + string(result.damage) + ". " + result.message;
-                    
-                     if (result.stat_change.stat != "none") {
-                         var t_mon = (result.stat_change.target == SCOPE.SELF) ? act.actor : act.target;
-                         var amt = result.stat_change.stages;
-                         variable_struct_set(t_mon.stat_stages, result.stat_change.stat, 
-                             clamp(variable_struct_get(t_mon.stat_stages, result.stat_change.stat)+amt, -6, 6));
-                         t_mon.recalculate_stats();
-                     }
-                     if (result.condition_change.condition != "none") {
-                         var t_mon = (result.condition_change.target == SCOPE.SELF) ? act.actor : act.target;
-                         if (t_mon.status_condition == "NONE") {
-                             t_mon.status_condition = result.condition_change.condition;
-                             if (t_mon.status_condition == "SLP") t_mon.status_turn = irandom_range(1, 3);
-                             t_mon.recalculate_stats();
-                         }
-                     }
-                } else {
+				if (result.hit) {
+					    act.target.current_hp = max(0, act.target.current_hp - result.damage);
+    
+					    // NEW: Apply Drain (Heal User)
+					    if (variable_struct_exists(result, "heal") && result.heal > 0) {
+					        act.actor.current_hp = min(act.actor.max_hp, act.actor.current_hp + result.heal);
+					    }
+    
+					    // NEW: Apply Recoil (Hurt User)
+					    if (variable_struct_exists(result, "recoil") && result.recoil > 0) {
+					        act.actor.current_hp = max(0, act.actor.current_hp - result.recoil);
+					        // Note: Check if user died from recoil in CHECK_FAINT state
+					    }
+
+					    if (result.damage > 0) {
+					        screen_shake = 10;
+					        if (act.owner == "PLAYER") e_flash_alpha = 1.0; else p_flash_alpha = 1.0;
+					    }
+					    // ... continue with message logs and stat changes ...
+				} else {
                     battle_log += " " + result.message;
                 }
             }

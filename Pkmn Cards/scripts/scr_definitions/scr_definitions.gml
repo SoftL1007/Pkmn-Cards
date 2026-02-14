@@ -45,14 +45,25 @@ function Move(_id, _name, _type, _bp, _acc, _prio, _effect = undefined) construc
     }
 }
 
-function BattleCard(_id, _name, _desc, _scope) constructor {
+/// @desc scr_definitions
+
+enum CARD_TYPE { MAGIC, TRAP, EVENT } // Event = Heals/Special that appear randomly
+enum RARITY { COMMON, RARE, EPIC, LEGENDARY }
+
+function BattleCard(_id, _name, _desc, _scope, _type, _rarity, _icon_idx, _effect_data = undefined) constructor {
     id = _id;
     name = _name;
     description = _desc;
     target_scope = _scope; 
+    type = _type;
+    rarity = _rarity;
+    icon_index = _icon_idx; // The frame number in spr_cards
+    effect_data = _effect_data; // Struct for specific logic (e.g. trap trigger)
 }
 
+// Update Pokemon Struct to hold a Trap Slot
 function Pokemon(_species_data, _level, _moves) constructor {
+    // ... (Keep existing stats/init code) ...
     species_name = _species_data.name;
     nickname = species_name; 
     sprite_frame = _species_data.sprite_index; 
@@ -78,24 +89,23 @@ function Pokemon(_species_data, _level, _moves) constructor {
     
     moves = _moves; 
     
+    // NEW: TRAP SLOT
+    active_trap = undefined; // Will hold a BattleCard struct if a trap is set
+    
     static is_fainted = function() { return current_hp <= 0; }
     
     static recalculate_stats = function() {
+        // ... (Keep existing stat calc logic) ...
         var stat_keys = ["atk", "def", "spa", "spd", "spe"];
         for (var i = 0; i < array_length(stat_keys); i++) {
             var key = stat_keys[i];
             var stage = variable_struct_get(stat_stages, key);
             var base = variable_struct_get(base_stats, key);
             var card_mult = variable_struct_get(card_buffs, key);
-            
-            var stage_mult = 1.0;
-            if (stage >= 0) stage_mult = (2 + stage) / 2;
-            else stage_mult = 2 / (2 + abs(stage));
-            
+            var stage_mult = (stage >= 0) ? (2 + stage) / 2 : 2 / (2 + abs(stage));
             var status_mult = 1.0;
             if (status_condition == "BRN" && key == "atk") status_mult = 0.5;
             if (status_condition == "PAR" && key == "spe") status_mult = 0.25;
-            
             variable_struct_set(stats, key, floor(base * stage_mult * card_mult * status_mult));
         }
     }
@@ -115,8 +125,6 @@ function Pokemon(_species_data, _level, _moves) constructor {
         for(var i=0; i<5; i++) {
             if (variable_struct_get(stat_stages, keys[i]) < 0) return true;
         }
-        // NOTE: We don't usually show debuff shader for Status Conditions (Burn/Poison), 
-        // as they have their own icons, but if you want the shader too, uncomment below:
         if (status_condition != "NONE") return true; 
         return false;
     }

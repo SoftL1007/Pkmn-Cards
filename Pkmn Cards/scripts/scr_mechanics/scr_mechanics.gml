@@ -114,6 +114,8 @@ function get_type_effectiveness(_atk_type, _def_type) {
 function calculate_move_result(_attacker, _defender, _move) {
     var result = { 
         damage: 0, 
+        heal: 0,      // NEW: For Giga Drain
+        recoil: 0,    // NEW: For Double Edge
         message: "", 
         hit: true, 
         is_status: false,
@@ -122,13 +124,14 @@ function calculate_move_result(_attacker, _defender, _move) {
     };
     
     // 1. Accuracy Check
-    if (_move.accuracy < 100 && irandom(100) > _move.accuracy) {
+    // (Bypass accuracy for "Swift" or similar moves if added, otherwise standard)
+    if (_move.accuracy < 100 && _move.accuracy > 0 && irandom(100) > _move.accuracy) {
         result.hit = false;
         result.message = "The attack missed!";
         return result;
     }
 
-    // 2. CHECK FOR STATUS MOVES (BP 0)
+    // 2. CHECK FOR PURE STATUS MOVES (BP 0)
     if (_move.base_power == 0) {
         result.is_status = true;
         
@@ -147,6 +150,7 @@ function calculate_move_result(_attacker, _defender, _move) {
                 case "spd": s_name = "Sp. Def"; break;
                 case "spe": s_name = "Speed"; break;
                 case "acc": s_name = "Accuracy"; break;
+                case "eva": s_name = "Evasion"; break;
             }
             var rise = (_move.effect.amount > 0);
             result.message = s_name + (rise ? " rose!" : " fell!");
@@ -169,40 +173,70 @@ function calculate_move_result(_attacker, _defender, _move) {
     }
     
     // 3. DAMAGE CALCULATION
-    var cat = get_gen3_category(_move.type);
-    var a = (cat == "PHYSICAL") ? _attacker.stats.atk : _attacker.stats.spa;
-    var d = (cat == "PHYSICAL") ? _defender.stats.def : _defender.stats.spd;
     
-    var level_factor = (2 * _attacker.level) / 5 + 2;
-    var base_dmg = (level_factor * _move.base_power * (a / d)) / 50 + 2;
-    
-    var multiplier = 1.0;
-    
-    // STAB
-    if (array_contains(_attacker.types, _move.type)) multiplier *= 1.5;
-    
-    // Type Effectiveness (Loop for Dual Types)
-    var type_mult = 1.0;
-    for (var i = 0; i < array_length(_defender.types); i++) {
-        type_mult *= get_type_effectiveness(_move.type, _defender.types[i]);
+    // Check for Fixed Damage (Seismic Toss / Night Shade)
+    if (variable_struct_exists(_move.effect, "fixed") && _move.effect.fixed) {
+        result.damage = _attacker.level;
+        result.message = "It hit with fixed damage!";
+    } 
+    else {
+        // Standard Formula
+        var cat = get_gen3_category(_move.type);
+        var a = (cat == "PHYSICAL") ? _attacker.stats.atk : _attacker.stats.spa;
+        var d = (cat == "PHYSICAL") ? _defender.stats.def : _defender.stats.spd;
+        
+        // Burn Reduction (Physical only, unless Guts ability [not impl])
+        if (_attacker.status_condition == "BRN" && cat == "PHYSICAL") a = floor(a * 0.5);
+        
+        var level_factor = (2 * _attacker.level) / 5 + 2;
+        var base_dmg = (level_factor * _move.base_power * (a / d)) / 50 + 2;
+        
+        var multiplier = 1.0;
+        
+        // STAB
+        if (array_contains(_attacker.types, _move.type)) multiplier *= 1.5;
+        
+        // Type Effectiveness
+        var type_mult = 1.0;
+        for (var i = 0; i < array_length(_defender.types); i++) {
+            type_mult *= get_type_effectiveness(_move.type, _defender.types[i]);
+        }
+        multiplier *= type_mult;
+        
+        // Critical Hit (High Crit Logic)
+        var crit_rate = 6.25;
+        if (variable_struct_exists(_move.effect, "high_crit")) crit_rate = 12.5;
+        
+        var is_crit = (random(100) < crit_rate);
+        if (is_crit) multiplier *= 2.0;
+        
+        var rng = irandom_range(85, 100) / 100;
+        result.damage = floor(base_dmg * multiplier * rng);
+        if (result.damage < 1 && type_mult > 0) result.damage = 1;
+        
+        // Messages
+        if (type_mult == 0) result.message = "It had no effect...";
+        else if (type_mult > 1) result.message = "It's super effective!";
+        else if (type_mult < 1) result.message = "It's not very effective...";
+        
+        if (is_crit && type_mult > 0) result.message += " Critical hit!";
     }
-    multiplier *= type_mult;
     
-    // Critical Hit
-    var is_crit = (random(100) < 6.25);
-    if (is_crit) multiplier *= 2.0;
+    // 4. COMPLEX EFFECTS (Drain & Recoil)
+    if (result.damage > 0) {
+        // DRAIN (Giga Drain)
+        if (variable_struct_exists(_move.effect, "drain")) {
+            result.heal = floor(result.damage * _move.effect.drain);
+            result.message += " Drained health!";
+        }
+        // RECOIL (Double Edge)
+        if (variable_struct_exists(_move.effect, "recoil")) {
+            result.recoil = floor(result.damage * _move.effect.recoil);
+            result.message += " Hit with recoil!";
+        }
+    }
     
-    var rng = irandom_range(85, 100) / 100;
-    result.damage = floor(base_dmg * multiplier * rng);
-    
-    // Messages
-    if (type_mult == 0) result.message = "It had no effect...";
-    else if (type_mult > 1) result.message = "It's super effective!";
-    else if (type_mult < 1) result.message = "It's not very effective...";
-    
-    if (is_crit && type_mult > 0) result.message += " Critical hit!";
-    
-    // 4. SECONDARY EFFECTS (10%, 30% chances etc)
+    // 5. SECONDARY EFFECTS (10%, 30% chances etc)
     if (irandom(100) < _move.effect.chance) {
         
         // Secondary Stat Change
@@ -214,16 +248,9 @@ function calculate_move_result(_attacker, _defender, _move) {
             };
             
             var s_name = _move.effect.stat; 
-            switch(s_name) {
-                case "atk": s_name = "Attack"; break;
-                case "def": s_name = "Defense"; break;
-                case "spa": s_name = "Sp. Atk"; break;
-                case "spd": s_name = "Sp. Def"; break;
-                case "spe": s_name = "Speed"; break;
-                case "acc": s_name = "Accuracy"; break;
-            }
+            // Reuse switch from above or make helper function
             var rise = (_move.effect.amount > 0);
-            result.message += " " + s_name + (rise ? " rose!" : " fell!");
+            result.message += " Stat" + (rise ? " rose!" : " fell!");
         }
         
         // Secondary Condition Change

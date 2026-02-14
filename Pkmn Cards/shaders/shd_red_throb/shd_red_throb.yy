@@ -3,8 +3,8 @@
   "%Name":"shd_red_throb",
   "name":"shd_red_throb",
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

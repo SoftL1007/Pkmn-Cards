@@ -19,8 +19,8 @@
   ],
   "name":"rm_battle",
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"Rooms",
+    "path":"folders/Rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

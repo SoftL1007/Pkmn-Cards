@@ -3,8 +3,8 @@
   "%Name":"shd_debuff",
   "name":"shd_debuff",
   "parent":{
-    "name":"Pkmn Cards",
-    "path":"Pkmn Cards.yyp",
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",
